@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use CrudViews\Controller\AppController as BaseController;
 
 /**
  * Application Controller
@@ -24,8 +25,7 @@ use Cake\Controller\Controller;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
-{
+class AppController extends BaseController {
 
     /**
      * Initialization hook method.
@@ -34,9 +34,28 @@ class AppController extends Controller
      *
      * @return void
      */
-    public function initialize()
-    {
+    public function initialize() {
         parent::initialize();
         $this->loadComponent('Flash');
+		$this->connectCrudViews('all');
     }
+	
+	/**
+	 * Pass this call through to CrudView plugin
+	 */
+	public function beforeFilter(Event $event) {
+			parent::beforeFilter();
+			// do whatever else you want
+	}
+
+	/**
+	 * Pass this call through to the CrudView plugin
+	 *
+	 * @param Event $event
+	 */
+	public function beforeRender(Event $event) {
+			parent::beforeRender($event);
+			// do whatever else you want
+	}
+
 }
