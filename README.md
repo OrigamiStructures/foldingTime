@@ -1,4 +1,5 @@
-# foldingTime - The Origami Structures time tracking app
+# foldingTime #
+The Origami Structures time tracking app
 
 A simple application for tracking time on Origami Structures projects.
 
