@@ -1,26 +1,17 @@
-# CakePHP Application Skeleton
+# foldingTime - The Origami Structures time tracking app
 
-[![Build Status](https://api.travis-ci.org/cakephp/app.png)](https://travis-ci.org/cakephp/app)
-[![License](https://poser.pugx.org/cakephp/app/license.svg)](https://packagist.org/packages/cakephp/app)
+A simple application for tracking time on Origami Structures projects.
 
-A skeleton for creating applications with [CakePHP](http://cakephp.org) 3.0.
+Please see the DropBox folder 'projx_foldingTime' for data storage and UML stuff.
 
-The framework source code can be found here: [cakephp/cakephp](https://github.com/cakephp/cakephp).
+app.php copy ( 2015.08.01 ) is also here, with database config
 
-## Installation
+## Notes ##
 
-1. Download [Composer](http://getcomposer.org/doc/00-intro.md) or update `composer self-update`.
-2. Run `php composer.phar create-project --prefer-dist cakephp/app [app_name]`.
+1. I installed the proffer plug-in on this system (thought I was in OStructures web)
+2. I have also submoduled [crudViews][1], [GeSHi][2] and [Cake3Markdown][3], all from OStructures
 
-If Composer is installed globally, run
-```bash
-composer create-project --prefer-dist cakephp/app [app_name]
-```
 
-You should now be able to visit the path to where you installed the app and see
-the setup traffic lights.
-
-## Configuration
-
-Read and edit `config/app.php` and setup the 'Datasources' and any other
-configuration relevant for your application.
+[1]: https://github.com/OrigamiStructures/crudViews "crudViews github repository"
+[2]: https://github.com/OrigamiStructures/Geshi "GeSHi github repository"
+[3]: https://github.com/OrigamiStructures/Cake3xMarkdown "Cake3xMarkdown github repository"
