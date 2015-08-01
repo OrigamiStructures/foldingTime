@@ -4,3 +4,6 @@
 [submodule "plugins/Geshi"]
 	path = plugins/Geshi
 	url = https://github.com/OrigamiStructures/Geshi.git
+[submodule "plugins/Cake3xMarkdown"]
+	path = plugins/Cake3xMarkdown
+	url = https://github.com/OrigamiStructures/Cake3xMarkdown.git

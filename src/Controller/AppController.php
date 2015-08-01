@@ -26,6 +26,8 @@ use CrudViews\Controller\AppController as BaseController;
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class AppController extends BaseController {
+	
+//	public $helpers .= [‘Form’, ‘Html’, ‘CakePHP3xMarkdown’];
 
     /**
      * Initialization hook method.
