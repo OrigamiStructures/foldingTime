@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use CrudViews\Controller\AppController as BaseController;
 
 /**
@@ -25,7 +26,7 @@ use CrudViews\Controller\AppController as BaseController;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends BaseController {
+class AppController extends Controller {
 	
 //	public $helpers .= [‘Form’, ‘Html’, ‘CakePHP3xMarkdown’];
 
@@ -39,15 +40,26 @@ class AppController extends BaseController {
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Flash');
-		$this->connectCrudViews('all');
+//		$this->connectCrudViews('all');
+		$this->loadComponent('Auth', [
+			'loginRedirect' => [
+				'controller' => 'Times',
+				'action' => 'index'
+			],
+			'logoutRedirect' => [
+				'controller' => 'Pages',
+				'action' => 'display',
+				'home'
+			]
+		]);
     }
 	
 	/**
 	 * Pass this call through to CrudView plugin
 	 */
 	public function beforeFilter(Event $event) {
-			parent::beforeFilter();
-			// do whatever else you want
+			parent::beforeFilter($event);
+			$this->Auth->allow(['index', 'view', 'display']);
 	}
 
 	/**
