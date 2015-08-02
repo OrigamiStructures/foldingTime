@@ -28,7 +28,7 @@ use CrudViews\Controller\AppController as BaseController;
  */
 class AppController extends BaseController {
 	
-//	public $helpers .= [‘Form’, ‘Html’, ‘CakePHP3xMarkdown’];
+	public $helpers = ['Form', 'Html', 'Cake3xMarkdown.CakeMarkdown'];
 
     /**
      * Initialization hook method.
