@@ -6,6 +6,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use DateTime;
 
 /**
  * Times Model
@@ -17,7 +18,7 @@ use Cake\Validation\Validator;
  */
 class TimesTable extends Table
 {
-
+	
     /**
      * Initialize method
      *
@@ -97,4 +98,35 @@ class TimesTable extends Table
         $rules->add($rules->existsIn(['task_id'], 'Tasks'));
         return $rules;
     }
+	
+	/**
+	 * Retrieve time records based upon user and timeframe
+	 * 
+	 * Requires the pass of 'pass_params' options element
+	 * pass_params[0] is the user, or ALL for all users
+	 * pass_params[1] is the number of days to return
+	 * 
+	 * @param Query $query
+	 * @param array $options
+	 * @return Query
+	 */
+	public function findUserTimes(Query $query, array $options) {
+		
+		$user = isset($options['pass_params'][0]) ? $options['pass_params'][0] : 'ALL';
+		$days = isset($options['pass_params'][1]) ? $options['pass_params'][1] : 7;
+		
+		if($user != 'ALL'){
+			$query->where([
+				'Times.user_id' => $user
+			]);
+		}
+
+		$query->where([
+			'Times.time_in >=' => new DateTime("-$days days")
+		])
+				->order(['Times.time_in' => 'DESC']);
+
+        return $query;
+	}
+	
 }

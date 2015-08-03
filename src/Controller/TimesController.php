@@ -18,11 +18,20 @@ class TimesController extends AppController
      */
     public function index()
     {
+		$pass_params = $this->request->params['pass'];
+
+        $customFinderOptions = [
+            'pass_params' => $pass_params
+        ];
         $this->paginate = [
-            'contain' => ['Users', 'Projects', 'Groups', 'Tasks']
+//            'contain' => ['Users', 'Projects', 'Groups', 'Tasks']
+			'finder' => [
+				'UserTimes' => $customFinderOptions
+				]
         ];
         $this->set('times', $this->paginate($this->Times));
         $this->set('_serialize', ['times']);
+//		debug($this->paginate($this->Times));
     }
 
     /**
