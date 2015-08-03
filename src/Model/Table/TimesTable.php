@@ -112,6 +112,14 @@ class TimesTable extends Table
 	 */
 	public function findUserTimes(Query $query, array $options) {
 		
+		$query->select([
+			'Times.user',
+			'Times.project',
+			'Times.activity',
+			'Times.time_in',
+			'Times.time_out'
+		], true);
+		
 		$user = isset($options['pass_params'][0]) ? $options['pass_params'][0] : 'ALL';
 		$days = isset($options['pass_params'][1]) ? $options['pass_params'][1] : 7;
 		
@@ -124,7 +132,19 @@ class TimesTable extends Table
 		$query->where([
 			'Times.time_in >=' => new DateTime("-$days days")
 		])
-				->order(['Times.time_in' => 'DESC']);
+				->order(['Times.time_in' => 'DESC'])
+				->contain([
+					'Users' =>
+						function($q){
+						return $q
+								->select(['username' => 'Users.name']);
+						},
+					'Projects' =>
+						function($q){
+						return $q
+								->select(['projectname' => 'Projects.name']);
+						}
+					]);
 
         return $query;
 	}
