@@ -1,5 +1,5 @@
-# foldingTime #
-```The Origami Structures time tracking app```
+# foldingTime <br />
+<span style = 'font-size: 50%;'>The Origami Structures time tracking app</span>
 
 A simple application for tracking time on Origami Structures projects.
 
