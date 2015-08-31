@@ -26,7 +26,7 @@ use CrudViews\Controller\AppController as BaseController;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller {
+class AppController extends BaseController {
 	
 	public $helpers = ['Form', 'Html', 'Cake3xMarkdown.CakeMarkdown'];
 
@@ -40,7 +40,7 @@ class AppController extends Controller {
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Flash');
-		// $this->connectCrudViews('all');
+		 $this->connectCrudViews('all');
 		$this->loadComponent('Auth', [
 			'loginRedirect' => [
 				'controller' => 'Times',
