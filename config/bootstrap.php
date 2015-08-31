@@ -181,7 +181,6 @@ Request::addDetector('tablet', function ($request) {
  */
 
 Plugin::load('Migrations');
-Plugin::load('Proffer', ['bootstrap' => true]);
 Plugin::load('CrudViews', ['autoload' => true]);
 Plugin::load('Geshi', ['autoload' => true, 'routes' => true]);
 Plugin::load('Cake3xMarkdown', ['autoload' => TRUE]);
