@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Network\Session;
+
 
 /**
  * Users Controller
@@ -17,11 +19,12 @@ class UsersController extends AppController
 	}
 	
 	public function login() {
+        $redirect = $this->request->session()->read('Auth.redirect');
 		if ($this->request->is('post')) {
 			$user = $this->Auth->identify();
 			if ($user) {
 				$this->Auth->setUser($user);
-				return $this->redirect($this->Auth->redirectUrl());
+				return $this->redirect($this->Auth->redirectUrl($redirect));
 			}
 			$this->Flash->error(__('Invalid username or password, try again'));
 		}
@@ -43,7 +46,7 @@ class UsersController extends AppController
         ];
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
-		$this->_CrudData->load('Users')->blacklist('password');
+//		$this->_CrudData->load('Users')->blacklist('pass3', 'password');
     }
 
     /**
@@ -106,6 +109,7 @@ class UsersController extends AppController
             }
         }
         $groups = $this->Users->Groups->find('list', ['limit' => 200]);
+//        $this->render('edit');
         $this->set(compact('user', 'groups'));
         $this->set('_serialize', ['user']);
     }

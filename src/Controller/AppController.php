@@ -40,8 +40,16 @@ class AppController extends BaseController {
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Flash');
-		 $this->connectCrudViews('all');
+//		$this->connectCrudViews('all');
 		$this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [            
+                    'fields' => [
+                        'username' => 'username', 
+                        'password' => 'pass3'
+                    ]
+                ]
+            ],
 			'loginRedirect' => [
 				'controller' => 'Times',
 				'action' => 'index'
@@ -59,7 +67,7 @@ class AppController extends BaseController {
 	 */
 	public function beforeFilter(Event $event) {
 			parent::beforeFilter($event);
-			$this->Auth->allow(['index', 'view', 'display']);
+			$this->Auth->allow(['index', 'view', 'display', 'edit']);
 	}
 
 	/**

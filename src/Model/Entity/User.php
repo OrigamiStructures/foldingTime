@@ -21,6 +21,8 @@ class User extends Entity
     ];
 	
 	protected function _setPassword($password) {
+        debug($password);
+        debug(\Cake\Error\Debugger::trace());die;
         return (new DefaultPasswordHasher)->hash($password);
     }
 

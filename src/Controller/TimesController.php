@@ -33,7 +33,7 @@ class TimesController extends AppController
 		
         $this->set('times', $this->paginate($this->Times));
         $this->set('_serialize', ['times']);
-//		$this->_CrudData->load('Times')->whitelist(['user', 'project', 'activity', 'time_in', 'time_out'], TRUE);
+		$this->_CrudData->load('Times')->whitelist(['user', 'project', 'activity', 'time_in', 'time_out'], TRUE);
 //		debug($this->paginate($this->Times));
     }
 

@@ -57,8 +57,8 @@ class UsersTable extends Table
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->requirePresence('pass3', 'create')
+            ->notEmpty('pass3');
 
         $validator
             ->allowEmpty('name');
