@@ -35,3 +35,5 @@ $dispatcher->dispatch(
     Request::createFromGlobals(),
     new Response()
 );
+
+echo '';//change for auto-push test
