@@ -20,7 +20,7 @@
         <legend><?= __('Edit User') ?></legend>
         <?php
             echo $this->Form->input('username');
-            echo $this->Form->input('pass3');
+            echo $this->Form->password('pass3');
             echo $this->Form->input('group_id', ['options' => $groups]);
             echo $this->Form->input('name');
             echo $this->Form->input('photo');
