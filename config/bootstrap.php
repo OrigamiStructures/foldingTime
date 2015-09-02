@@ -204,3 +204,10 @@ DispatcherFactory::add('ControllerFactory');
  * This is needed for matching the auto-localized string output of Time() class when parsing dates.
  */
 Type::build('datetime')->useLocaleParser();
+
+//Status constants
+define("OPEN", 1);
+define("REVIEW", 2);
+define("CLOSED", 4);
+define("PAUSED", 8);
+
