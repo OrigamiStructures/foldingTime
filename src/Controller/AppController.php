@@ -16,7 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use CrudViews\Controller\AppController as BaseController;
+use crudViews\Controller\AppController as BaseController;
 
 /**
  * Application Controller
