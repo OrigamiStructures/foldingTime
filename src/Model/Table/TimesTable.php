@@ -113,6 +113,7 @@ class TimesTable extends Table
 	public function findUserTimes(Query $query, array $options) {
 		
 		$query->select([
+            'Times.id',
 			'Times.user',
 			'Times.project',
 			'Times.activity',
