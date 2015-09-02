@@ -1,5 +1,5 @@
-[submodule "plugins/crudViews"]
-	path = plugins/crudViews
+[submodule "plugins/CrudViews"]
+	path = plugins/CrudViews
 	url = https://github.com/OrigamiStructures/crudViews.git
 [submodule "plugins/Geshi"]
 	path = plugins/Geshi
