@@ -18,22 +18,24 @@ class TimesController extends AppController
      */
     public function index()
     {
-		$pass_params = $this->request->params['pass'];
+		$request = $this->request;
 
         $customFinderOptions = [
-            'pass_params' => $pass_params
+            'request' => $request
         ];
-        $this->paginate = [
-//            'contain' => ['Users', 'Projects', 'Groups', 'Tasks']
-			'finder' => [
-				'UserTimes' => $customFinderOptions
-				]
-        ];
+        $query = $this->Times->find('UserTimes', $customFinderOptions);
+//        $this->paginate = [
+//            'contain' => ['Users', 'Projects'],
+//			'finder' => [
+//				'UserTimes' => $customFinderOptions
+//				]
+//        ];
 		
-        $this->set('times', $this->paginate($this->Times));
+//        $this->set('times', $this->paginate($this->Times));
+        $this->set('times', $this->paginate($query));
         $this->set('_serialize', ['times']);
 //        $this->_CrudData->load('Projects')->whitelist(['name']);
-		$this->_CrudData->load('Times')->whitelist(['Projects.name', 'activity', 'time_in', 'time_out', 'duration'], TRUE);
+		$this->_CrudData->load('Times')->whitelist(['user_id', 'project_id', 'activity', 'time_in', 'time_out', 'duration'], TRUE);
 //		debug($this->paginate($this->Times));
     }
 
