@@ -96,50 +96,32 @@ class TimesTable extends Table
 	/**
 	 * Retrieve time records based upon user and timeframe
 	 * 
-	 * Requires the pass of 'pass_params' options element
-	 * pass_params[0] is the user, or ALL for all users
-	 * pass_params[1] is the number of days to return
+	 * Requires the pass of the request as the options element
+	 * pass_params[0] is the number of days to return
+	 * pass_params[1] is the user, or ALL for all users
+     * 
+     * If there is an Auth user, and no user param is passed, 
+     * the Auth user is used
 	 * 
 	 * @param Query $query
 	 * @param array $options
 	 * @return Query
 	 */
 	public function findUserTimes(Query $query, array $options) {
-		
-		$query->select([
-            'Times.id',
-			'Times.user_id',
-			'Times.project_id',
-			'Times.activity',
-			'Times.time_in',
-			'Times.time_out'
-		], true);
-		
-		$user = isset($options['pass_params'][0]) ? $options['pass_params'][0] : 'ALL';
-		$days = isset($options['pass_params'][1]) ? $options['pass_params'][1] : 7;
-		
-		if($user != 'ALL'){
-			$query->where([
-				'Times.user_id' => $user
-			]);
-		}
+        $session_user = $options['request']->session()->read('Auth.User.id');
+        $default = [
+            0 => 7,
+            1 => is_null($session_user) ? 'ALL' : $session_user
+        ];
+        list($days, $user) = $options['request']->params['pass'] + $default;
+                
+		$query->order(['Times.time_in' => 'DESC']);
+        $query->contain(['Users', 'Projects']);
+   		$query->where(['Times.time_in >=' => new DateTime("-$days days")]);
 
-		$query->where([
-			'Times.time_in >=' => new DateTime("-$days days")
-		])
-				->order(['Times.time_in' => 'DESC'])
-				->contain([
-					'Users' =>
-						function($q){
-						return $q
-								->select(['username' => 'Users.name']);
-						},
-					'Projects' =>
-						function($q){
-						return $q
-								->select(['projectname' => 'Projects.name']);
-						}
-					]);
+        if($user != 'ALL'){
+			$query->where(['Times.user_id' => $user]);
+		}
 
         return $query;
 	}
