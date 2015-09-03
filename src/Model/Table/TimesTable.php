@@ -71,12 +71,6 @@ class TimesTable extends Table
             ->allowEmpty('activity');
 
         $validator
-            ->allowEmpty('user');
-
-        $validator
-            ->allowEmpty('project');
-
-        $validator
             ->add('status', 'valid', ['rule' => 'numeric'])
             ->allowEmpty('status');
 
@@ -114,8 +108,8 @@ class TimesTable extends Table
 		
 		$query->select([
             'Times.id',
-			'Times.user',
-			'Times.project',
+			'Times.user_id',
+			'Times.project_id',
 			'Times.activity',
 			'Times.time_in',
 			'Times.time_out'

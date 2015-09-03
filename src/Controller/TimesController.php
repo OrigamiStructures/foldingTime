@@ -30,10 +30,10 @@ class TimesController extends AppController
 				]
         ];
 		
-		
         $this->set('times', $this->paginate($this->Times));
         $this->set('_serialize', ['times']);
-		$this->_CrudData->load('Times')->whitelist(['user', 'project', 'activity', 'time_in', 'time_out'], TRUE);
+//        $this->_CrudData->load('Projects')->whitelist(['name']);
+		$this->_CrudData->load('Times')->whitelist(['Projects.name', 'activity', 'time_in', 'time_out', 'duration'], TRUE);
 //		debug($this->paginate($this->Times));
     }
 
@@ -47,7 +47,7 @@ class TimesController extends AppController
     public function view($id = null)
     {
         $time = $this->Times->get($id, [
-            'contain' => ['Users', 'Projects', 'Groups', 'Tasks']
+            'contain' => ['Users', 'Projects', 'Tasks']
         ]);
         $this->set('time', $time);
         $this->set('_serialize', ['time']);
@@ -103,7 +103,14 @@ class TimesController extends AppController
         $projects = $this->Times->Projects->find('list', ['limit' => 200]);
         $groups = $this->Times->Groups->find('list', ['limit' => 200]);
         $tasks = $this->Times->Tasks->find('list', ['limit' => 200]);
-        $this->set(compact('time', 'users', 'projects', 'groups', 'tasks'));
+        $statuses = [
+            1 => 'OPEN',
+            2 => 'REVEIW',
+            4 => 'CLOSED',
+            8 => 'PAUSED'
+        ];
+        $this->_CrudData->load('Times')->override(['status' => 'select']);
+        $this->set(compact('time', 'users', 'projects', 'groups', 'tasks', 'statuses'));
         $this->set('_serialize', ['time']);
     }
 
