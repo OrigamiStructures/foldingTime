@@ -67,7 +67,13 @@ class TimesController extends AppController
         $projects = $this->Times->Projects->find('list', ['limit' => 200]);
         $groups = $this->Times->Groups->find('list', ['limit' => 200]);
         $tasks = $this->Times->Tasks->find('list', ['limit' => 200]);
-        $this->set(compact('time', 'users', 'projects', 'groups', 'tasks'));
+        $statuses = [
+            1 => 'OPEN',
+            2 => 'REVEIW',
+            4 => 'CLOSED',
+            8 => 'PAUSED'
+        ];
+        $this->set(compact('time', 'users', 'projects', 'groups', 'tasks', 'statuses'));
         $this->set('_serialize', ['time']);
     }
 
