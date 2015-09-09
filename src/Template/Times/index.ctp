@@ -1,3 +1,3 @@
+<p>The URL can accept 2 optional args '{host}/times/index/{days}/{user_id}' where days and user_id are integers</p>
 <?php
-echo $this->Html->tag('h1', 'Hey, this is my wrapper');
 echo $this->element('CrudViews.CRUD/index');
