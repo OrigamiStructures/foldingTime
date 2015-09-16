@@ -37,8 +37,10 @@ class ProjectsController extends AppController
         $project = $this->Projects->get($id, [
             'contain' => ['Clients', 'Tasks', 'Times']
         ]);
+        $this->configIndex('Times');
         $this->set('project', $project);
         $this->set('_serialize', ['project']);
+        $this->render('view');
     }
 
     /**

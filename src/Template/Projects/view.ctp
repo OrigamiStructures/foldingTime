@@ -85,6 +85,12 @@
 <div class="related row">
     <div class="column large-12">
     <h4 class="subheader"><?= __('Related Times') ?></h4>
+    <?php 
+    $this->Crud->useCrudData('Times');
+    $times = $project->times;
+    echo $this->element('CrudViews.CRUD/crud_index_table', ['times' => $times]);
+    ?>
+    <!--
     <?php if (!empty($project->times)): ?>
     <table cellpadding="0" cellspacing="0">
         <tr>
@@ -132,5 +138,6 @@
         <?php endforeach; ?>
     </table>
     <?php endif; ?>
+    -->
     </div>
 </div>

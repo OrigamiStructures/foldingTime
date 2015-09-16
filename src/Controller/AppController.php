@@ -40,7 +40,17 @@ class AppController extends BaseController {
     public function initialize() {
         parent::initialize();
         $this->loadComponent('Flash');
-		$this->connectCrudViews('all');
+		$this->connectCrudViews([
+            'Clients',
+            'Groups',
+            'Projects.add',
+            'Projects.edit',
+            'Projects.index',
+            'Projects.view',
+            'Tasks',
+            'Times',
+            'Users'
+            ]);
 		$this->loadComponent('Auth', [
             'authenticate' => [
                 'Form' => [            
