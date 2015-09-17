@@ -35,9 +35,22 @@ class ProjectsController extends AppController
     public function view($id = null)
     {
         $project = $this->Projects->get($id, [
-            'contain' => ['Clients', 'Tasks', 'Times']
+            'contain' => [
+                'Clients', 
+                'Tasks', 
+                'Times' => [
+                    'Users',
+                    'Tasks'
+                ]
+            ]
         ]);
         $this->configIndex('Times');
+        $timeCrudObject = $this->_CrudData->load('Times');
+        $timeCrudObject->overrideAction(['index' => 'projectTime']);
+        $timeCrudObject->override([
+            'time_out' => 'duration'
+        ]);
+        $timeCrudObject->blacklist(['project_id', 'status']);
         $this->set('project', $project);
         $this->set('_serialize', ['project']);
         $this->render('view');

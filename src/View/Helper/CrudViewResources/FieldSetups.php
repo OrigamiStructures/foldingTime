@@ -4,6 +4,7 @@ namespace App\View\Helper\CrudViewResources;
 
 use CrudViews\View\Helper\CRUD\Decorator;
 use Cake\Utility\Text;
+use CrudViews\View\Helper\CRUD\CrudFields;
 
 /**
  * FieldSetups are your customer output configurations
@@ -70,6 +71,20 @@ class FieldSetups {
 				new CrudFields($helper)
 				));
 	}
+    
+    /**
+     * This is a standard index page setup
+     * Repurposed for the embedded index of Time in a Project view CRUD.
+     * @param type $helper
+     * @return \App\View\Helper\CrudViewResources\TableCellDecorator
+     */
+    public function projectTime($helper) {
+        return new Decorator\TableCellDecorator(
+                new Decorator\BelongsToDecorator(
+                    new CrudFields($helper)
+                ));
+
+    }
 	
 	/**
 	 * Show some of long text and hide all for flyout
@@ -95,5 +110,11 @@ class FieldSetups {
 				$hidden
 			);
 	}
+    
+    public function duration($field, $options) {
+//        debug($this->helper);
+//        die;
+        return round($this->helper->entity->duration, 2);
+    }
 
 }

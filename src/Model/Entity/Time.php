@@ -18,4 +18,9 @@ class Time extends Entity
         '*' => true,
         'id' => false,
     ];
+    
+    protected function _getDuration() {
+        $seconds = $this->_properties['time_out']->toUnixString() - $this->_properties['time_in']->toUnixString();
+        return $seconds/3600;
+    }
 }
