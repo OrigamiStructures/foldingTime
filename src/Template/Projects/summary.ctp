@@ -1,0 +1,3 @@
+<?php
+debug($project->toArray());
+?>

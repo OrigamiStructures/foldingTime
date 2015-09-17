@@ -122,4 +122,29 @@ class ProjectsController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function summary($project_id = null, $start_date = null, $end_date = null) {
+        if ($end_date === null){
+            $end_date = time();
+        }
+        if($project_id === null || $start_date === null){
+            $this->Flash->error(__('We cannot summarize without a project or start date.'));
+            return FALSE;
+        }
+        $project = $this->Projects->find();
+        $project->where(['Projects.id' => $project_id]);
+        $project->contain([
+            'Users',
+            'Clients',
+            'Tasks',
+            'Times' => function ($q) use ($start_date, $end_date) {
+                return $q
+                    ->where(function ($exp, $q) use ($start_date, $end_date) {
+                        return $exp->between('time_in', $start_date, $end_date);
+                        })
+                    ->contain(['Users', 'Tasks']);
+            }
+        ]);
+        $this->set(compact('project'));
+    }
 }
