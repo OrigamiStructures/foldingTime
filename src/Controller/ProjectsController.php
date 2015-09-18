@@ -134,7 +134,6 @@ class ProjectsController extends AppController
         $project = $this->Projects->find();
         $project->where(['Projects.id' => $project_id]);
         $project->contain([
-            'Users',
             'Clients',
             'Tasks',
             'Times' => function ($q) use ($start_date, $end_date) {
