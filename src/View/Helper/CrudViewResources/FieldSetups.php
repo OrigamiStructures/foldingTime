@@ -79,11 +79,7 @@ class FieldSetups {
      * @return \App\View\Helper\CrudViewResources\TableCellDecorator
      */
     public function projectTime($helper) {
-        return new Decorator\TableCellDecorator(
-                new Decorator\BelongsToDecorator(
-                    new CrudFields($helper)
-                ));
-
+        return $this->status($helper);
     }
 	
 	/**
