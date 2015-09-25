@@ -43,10 +43,7 @@ class AppController extends BaseController {
 		$this->connectCrudViews([
             'Clients',
             'Groups',
-            'Projects.add',
-            'Projects.edit',
-            'Projects.index',
-            'Projects.view',
+            'Projects',
             'Tasks',
             'Times',
             'Users'
