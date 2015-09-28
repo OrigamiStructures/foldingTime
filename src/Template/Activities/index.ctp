@@ -1,5 +1,6 @@
 <div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
     <p>The URL can accept 2 optional args '{host}/activities/index/{days}/{user_id}' where days and user_id are integers</p>
+    <h3>Viewing: <?php //$activities->activity->user->name;?></h3>
 </div>
 <div class="actions columns large-2 medium-3">
     <?= $this->element('General/side-nav');?>
@@ -8,7 +9,6 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('user_id') ?></th>
             <th><?= $this->Paginator->sort('project_id') ?></th>
             <th><?= $this->Paginator->sort('time_in') ?></th>
             <th><?= $this->Paginator->sort('time_out') ?></th>
@@ -18,17 +18,11 @@
     <tbody>
     <?php foreach ($activities as $activity): ?>
         <tr>
-            <td><?= $this->Number->format($activity->id) ?></td>
-            <td><?= h($activity->created) ?></td>
-            <td><?= h($activity->modified) ?></td>
-            <td>
-                <?= $activity->has('user') ? $this->Html->link($activity->user->name, ['controller' => 'Users', 'action' => 'view', $activity->user->id]) : '' ?>
-            </td>
             <td>
                 <?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?>
             </td>
             <td><?= h($activity->time_in) ?></td>
-            <td><?= h($activity->time_out) ?></td>
+            <td><?= h($activity->duration) ?></td>
             <td class="actions">
                 <?= $this->Html->link(__('View'), ['action' => 'view', $activity->id]) ?>
                 <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activity->id]) ?>

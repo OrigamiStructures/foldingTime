@@ -1,0 +1,17 @@
+
+@mixin height-set($range) {
+	
+	@for $i from 1 through 10 {
+		.#{$range}-tall-#{($i*10)} { height: #{($i*10) * 1%}; }
+	}
+	.#{$range}-tall-auto { height: auto; }
+}
+
+@mixin tall($height) {
+	@if ($height == auto) {
+		height: auto;
+	} @else {
+		height: #{$height * 1%};
+	}
+}
+

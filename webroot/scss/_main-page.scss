@@ -1,0 +1,42 @@
+/*
+Copyright 2015 Origami Structures
+*/
+/* 
+    Created on : Aug 14, 2015, 11:58:59 AM
+    Author     : jasont
+*/
+
+.has-form {
+    //background: #333333 none repeat scroll 0 0;
+    height: 2.5rem;
+    padding: 0 0.83333rem;
+}
+h2.article-title {
+    background: tan none repeat scroll 0 0;
+    padding: 5px;
+}
+.homepage-hero{
+    background: #074e68 url("../img/heroProgrammingBackground.jpg") repeat scroll 0 0;
+    height: 350px;
+    padding: 100px 20px 0;
+    position: relative;
+    text-align: left;
+}
+.homepage-hero h1{
+    color: #fff;
+}
+.homepage-hero h3{
+    margin-left: 1.0rem;
+    color: #fff;
+}
+
+author_initial {
+    background: red none repeat scroll 0 0;
+    border-radius: 40px;
+    float: left;
+    margin-right: 10px;
+    padding: 10px 20px;
+}
+//.author_block {
+//    font-size: 70%;
+//}
