@@ -6,33 +6,27 @@
     <?= $this->element('General/side-nav');?>
 </div>
 <div class="activities index large-10 medium-9 columns">
-    <table cellpadding="0" cellspacing="0">
-    <thead>
-        <tr>
-            <th><?= $this->Paginator->sort('project_id') ?></th>
-            <th><?= $this->Paginator->sort('time_in') ?></th>
-            <th><?= $this->Paginator->sort('time_out') ?></th>
-            <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($activities as $activity): ?>
-        <tr>
-            <td>
-                <?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?>
-            </td>
-            <td><?= h($activity->time_in) ?></td>
-            <td><?= h($activity->duration) ?></td>
-            <td class="actions">
-                <?= $this->Html->link(__('View'), ['action' => 'view', $activity->id]) ?>
-                <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activity->id]) ?>
-                <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $activity->id)]) ?>
-            </td>
-        </tr>
-
+    <div class="row">
+        <div class="columns small-3"><?= $this->Paginator->sort('project_id') ?></div>
+        <div class="columns small-3"><?= $this->Paginator->sort('time_in') ?></div>
+        <div class="columns small-3"><?= $this->Paginator->sort('time_out') ?></div>
+        <div class="columns small-3"><?= __('Actions') ?></div>
+    </div>
+    <?php
+        foreach ($activities as $activity):
+        $row_class = "row status".$activity->status;
+    ?>
+    <div class="<?= $row_class?>">
+        <div class="columns small-3"><?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?></div>
+        <div class="columns small-3"><?= h($activity->time_in) ?></div>
+        <div class="columns small-3"><?= h($activity->duration) ?></div>
+        <div class="columns small-3">
+            <?= $this->Html->link(__('View'), ['action' => 'view', $activity->id]) ?>
+            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activity->id]) ?>
+            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $activity->id)]) ?>
+        </div>
+    </div>
     <?php endforeach; ?>
-    </tbody>
-    </table>
     <div class="paginator">
         <ul class="pagination">
             <?= $this->Paginator->prev('< ' . __('previous')) ?>
