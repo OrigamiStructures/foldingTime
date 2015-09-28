@@ -1,4 +1,6 @@
-<p>The URL can accept 2 optional args '{host}/activities/index/{days}/{user_id}' where days and user_id are integers</p>
+<div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
+    <p>The URL can accept 2 optional args '{host}/activities/index/{days}/{user_id}' where days and user_id are integers</p>
+</div>
 <div class="actions columns large-2 medium-3">
     <?= $this->element('General/side-nav');?>
 </div>
@@ -6,9 +8,6 @@
     <table cellpadding="0" cellspacing="0">
     <thead>
         <tr>
-            <th><?= $this->Paginator->sort('id') ?></th>
-            <th><?= $this->Paginator->sort('created') ?></th>
-            <th><?= $this->Paginator->sort('modified') ?></th>
             <th><?= $this->Paginator->sort('user_id') ?></th>
             <th><?= $this->Paginator->sort('project_id') ?></th>
             <th><?= $this->Paginator->sort('time_in') ?></th>

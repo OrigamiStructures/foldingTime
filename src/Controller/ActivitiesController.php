@@ -26,6 +26,7 @@ class ActivitiesController extends AppController
         $query = $this->Activities->find('UserActivities', $customFinderOptions);
         $this->set('activities', $this->paginate($query));
         $this->set('_serialize', ['activities']);
+        $this->layout = 'base';
     }
 
     /**
