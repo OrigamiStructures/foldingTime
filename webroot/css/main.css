@@ -6373,42 +6373,11 @@ footer {
   width: 100%;
   vertical-align: baseline; }
 
-article section.info, article section.toc {
-  border-style: solid;
-  border-width: 1px;
-  border-color: #d0d0d0;
-  margin-bottom: 1.25rem;
-  padding: 1.25rem;
-  background: #eaeaea;
-  color: #333333; }
-  article section.info > :first-child, article section.toc > :first-child {
-    margin-top: 0; }
-  article section.info > :last-child, article section.toc > :last-child {
-    margin-bottom: 0; }
-  article section.info h1, article section.info h2, article section.info h3, article section.info h4, article section.info h5, article section.info h6, article section.info p, article section.info li, article section.info dl, article section.toc h1, article section.toc h2, article section.toc h3, article section.toc h4, article section.toc h5, article section.toc h6, article section.toc p, article section.toc li, article section.toc dl {
-    color: #333333; }
-  article section.info h1, article section.info h2, article section.info h3, article section.info h4, article section.info h5, article section.info h6, article section.toc h1, article section.toc h2, article section.toc h3, article section.toc h4, article section.toc h5, article section.toc h6 {
-    line-height: 1;
-    margin-bottom: 0.625rem; }
-    article section.info h1.subheader, article section.info h2.subheader, article section.info h3.subheader, article section.info h4.subheader, article section.info h5.subheader, article section.info h6.subheader, article section.toc h1.subheader, article section.toc h2.subheader, article section.toc h3.subheader, article section.toc h4.subheader, article section.toc h5.subheader, article section.toc h6.subheader {
-      line-height: 1.4; }
-article section.toc ul:first-of-type, article section.info ul:first-of-type {
-  margin-bottom: .5rem; }
-article section.toc h1, article section.info h1 {
-  font-size: 1.25rem; }
-article section.toc h2, article section.info h2 {
-  font-size: 1.1rem;
-  margin-bottom: 0.1875rem;
-  /*font-weight: bolder;*/ }
-article .toc-anchor {
-  text-align: right;
-  float: right;
-  border-bottom: thin solid #ddd;
-  width: 100%; }
-article section.info .toc-anchor {
-  border-bottom: none; }
-article .info-link {
-  font-size: 80%; }
+.row.status1 {
+  background-color: #b8f3c7; }
+
+.row.status8 {
+  background-color: #ffc6b9; }
 
 pre {
   margin-bottom: 1.25rem;

@@ -20,37 +20,13 @@ footer {
     vertical-align: baseline;
 }
 
-article{
-	section.info, section.toc{
-		@include panel;
-	}
-	section.toc, section.info {
-		ul:first-of-type {
-			margin-bottom: .5rem;
-		}
-		h1{
-			font-size: 1.25rem;
-		}
-		h2{
-			font-size: 1.1rem;
-			margin-bottom: rem-calc(3);
-			/*font-weight: bolder;*/
-		}
-	}
-	.toc-anchor{
-			text-align: right;
-			float: right;
-			border-bottom: thin solid #ddd;
-			width: 100%;
-		}
-	section.info .toc-anchor {
-		border-bottom: none;
-	}
-	.info-link {
-		font-size: 80%;
-	}
+.row.status1{
+    background-color: rgb(184, 243, 199);
 }
 
+.row.status8{
+    background-color: rgb(255, 198, 185);
+}
 
 
 pre {

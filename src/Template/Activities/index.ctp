@@ -9,7 +9,7 @@
     <div class="row">
         <div class="columns small-3"><?= $this->Paginator->sort('project_id') ?></div>
         <div class="columns small-3"><?= $this->Paginator->sort('time_in') ?></div>
-        <div class="columns small-3"><?= $this->Paginator->sort('time_out') ?></div>
+        <div class="columns small-3"><?= $this->Paginator->sort('duration') ?></div>
         <div class="columns small-3"><?= __('Actions') ?></div>
     </div>
     <?php
