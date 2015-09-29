@@ -14,6 +14,7 @@
 namespace App\View\Helper;
 
 use Cake\View\Helper;
+use Cake\View\View;
 
 class TkHelper extends Helper {
 
