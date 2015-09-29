@@ -129,4 +129,94 @@ class ActivitiesController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+    
+    
+    
+    public function saveField() {
+        $result = array();
+        $this->layout = 'ajax';
+        $this->Activity->id = $this->request->data['id'];
+        if($this->request->data['fieldName'] == 'duration'){
+            $this->saveDuration();
+        } else {
+            $this->saveStandard();
+        }
+        $result['result'] = $this->Activity->save($this->request->data);
+        $result['duration'] = substr($this->Activity->field('Activity.duration', array('Activity.id' => $this->request->data['Activity']['id'])),0,5);
+        $this->set('result', $result);
+        $this->render('/Elements/json_return');
+    }
+    
+    private function saveDuration() {
+        $time = explode(':', $this->request->data['value']);
+        if (count($time) == 1) {
+            $durSeconds = ($time[0] * MINUTE);
+        }  else {
+            $durSeconds = ($time[0] * HOUR + $time[1] * MINUTE);
+        }      
+        $timeIn = date('Y-m-d H:i:s', time() - $durSeconds);
+        $timeOut = date('Y-m-d H:i:s', time());
+        $this->request->data= array(
+            'Activity' => array(
+                'id' => $this->request->data['id'],
+                'time_in' => $timeIn,
+                'time_out' => $timeOut
+            )
+        );
+    }
+    
+    private function saveStandard() {
+        $this->request->data = array(
+            'Activity' => array(
+                'id' => $this->request->data['id'],
+                $this->request->data['fieldName'] => $this->request->data['value']
+        ));
+    }
+    
+	/**
+	 * Close a time record
+	 * 
+	 * Same as pause, but with a different state
+	 * 
+	 * @param string $id
+	 * @param int $state
+	 */
+    public function timeStop($id, $state = CLOSED) {
+        $this->layout = 'ajax';
+        $time = date('Y-m-d H:i:s');
+        if($this->Activity->getRecordStatus($id) != PAUSED){
+            $this->request->data('Activity.time_out', $time);
+        }
+        $this->request->data('Activity.id', $id)
+                ->data('Activity.status', $state);
+        $element = $this->saveActivityChange($id);
+        $this->render($element);
+    }
+    
+	/**
+	 * Pause a time record
+	 * 
+	 * @param string $id
+	 */
+    public function timePause($id) {
+		$this->timeStop($id, PAUSED);
+    }
+    
+	/**
+	 * Restart a stopped or paused time record
+	 * 
+	 * @param string $id
+	 */
+    public function timeRestart($id) {
+        $this->layout = 'ajax';
+        $duration = $this->Activity->field('duration', array('Activity.id' => $id));
+        $this->request->data('id', $id)
+                ->data('value', $duration);
+        $this->saveDuration();
+        $this->request->data('Activity.status', OPEN);
+        $element = $this->saveActivityChange($id);
+        $this->render($element);
+    }
+    
+
 }

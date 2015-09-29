@@ -21,9 +21,7 @@
         <div class="columns small-3"><?= h($activity->time_in) ?></div>
         <div class="columns small-3"><?= h($activity->duration) ?></div>
         <div class="columns small-3">
-            <?= $this->Html->link(__('View'), ['action' => 'view', $activity->id]) ?>
-            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $activity->id]) ?>
-            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $activity->id], ['confirm' => __('Are you sure you want to delete # {0}?', $activity->id)]) ?>
+            <?= $this->Tk->timeFormActionButtons($activity->id, $activity->status);?>
         </div>
     </div>
     <?php endforeach; ?>
