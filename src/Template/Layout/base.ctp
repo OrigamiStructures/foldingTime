@@ -27,10 +27,20 @@ $cakeDescription = 'OS Time';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css('main.css') ?>
+    
+    <?= $this->Html->script('../bower_components/modernizr/modernizr');?>
+    <?php
+        $this->start('script');
+            echo $this->Html->script('../bower_components/jquery/dist/jquery');
+            echo $this->Html->script('../bower_components/fastclick/lib/fastclick');
+            echo $this->Html->script('../bower_components/foundation/js/foundation.min');
+            echo $this->Html->script('app'); 
+            echo $this->Html->script('timekeep'); 
+        $this->end();
+    ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
 </head>
 <body>
     <header>
@@ -48,5 +58,6 @@ $cakeDescription = 'OS Time';
         <footer>
         </footer>
     </div>
+    <?= $this->fetch('script') ?>
 </body>
 </html>

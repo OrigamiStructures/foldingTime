@@ -14,6 +14,7 @@
 namespace App\View\Helper;
 
 use Cake\View\Helper;
+use App\Lib\dmDebug;
 use Cake\View\View;
 
 class TkHelper extends Helper {
@@ -55,42 +56,45 @@ class TkHelper extends Helper {
         $this->index = $index;
         $buttons = array(
 			$this->duplicateButton(),
-            $this->actionButton('icon-info-sign', 'click.timeInfo')
+            $this->actionButton('Info', 'click.timeInfo')
         );
         if($status & CLOSED){
-            $buttons[] = $this->actionButton('icon-refresh', 'click.timeReopen');
-            $buttons[] = $this->actionButton('icon-trash', 'click.timeDelete');
+            $buttons[] = $this->actionButton('Refresh', 'click.timeReopen');
+            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
         } else {
-            $buttons[] = $this->actionButton('icon-stop', 'click.timeStop');
+            $buttons[] = $this->actionButton('Stop', 'click.timeStop');
             $buttons[] = $this->pauseButton($status);
-            $buttons[] = $this->actionButton('icon-trash', 'click.timeDelete');
+            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
         }
         return $this->Html->nestedList($buttons, array('class' => 'button-bar'));
     }
     
     private function actionButton($type, $bind = NULL) {
-        $attributes = array(
+        $attributes = [
             'escape' => FALSE, 
-            'index' => $this->index);
+            'index' => $this->index];
         if($bind != NULL){
             $attributes['bind'] = $bind;
         }
-        return $this->Html->link($this->Html->tag('i', '', array('class' => $type)), '', $attributes);
+//        return $this->Html->link($this->Html->tag('i', '', array('class' => $type)), '', $attributes);
+        return $this->Html->link($type, '', $attributes);
     }
 	
 	private function duplicateButton() {
-        return $this->Html->link(
-				$this->Html->tag('i', '', array('class' => 'icon-plus'))
-				.$this->Html->tag('i', '', array('class' => 'icon-plus')),
-				'', 
-				array('bind' => 'click.timeDuplicate', 'escape' => FALSE, 'index' => $this->index, 'title' => 'Dup to a new record'));
+        $attributes = [
+            'bind' => 'click.timeDuplicate', 
+            'escape' => FALSE, 
+            'index' => $this->index, 
+            'title' => 'Dup to a new record'
+        ];
+        return $this->Html->link('Dupe', '', $attributes);
 	}
     
     private function pauseButton($status) {
         if($status & OPEN){
-            $button = $this->actionButton('icon-pause', 'click.timePause');
+            $button = $this->actionButton('Pause', 'click.timePause');
         } else {
-            $button = $this->actionButton('icon-play', 'click.timeRestart');
+            $button = $this->actionButton('Play', 'click.timeRestart');
         }
         return $button;
     }

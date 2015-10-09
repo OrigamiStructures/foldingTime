@@ -16,6 +16,7 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use App\Lib\dmDebug;
 use CrudViews\Controller\AppController as BaseController;
 
 /**
@@ -86,5 +87,5 @@ class AppController extends BaseController {
 			parent::beforeRender($event);
 			// do whatever else you want
 	}
-
+    
 }
