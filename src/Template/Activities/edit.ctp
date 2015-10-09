@@ -3,7 +3,7 @@
 <div class="actions columns large-2 medium-3">
     <?php
         $this->start('actions');
-            echo '<li>' . $this->Html->link(__('Main'), ['controller' => 'Clients', 'action' => 'index']) . '</li>';
+            echo '<li>' . $this->Html->link(__('Main'), ['action' => 'index']) . '</li>';
         $this->end();
     ?>
     <?= $this->element('General/side-nav');?>

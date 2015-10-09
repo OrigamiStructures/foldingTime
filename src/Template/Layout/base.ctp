@@ -30,12 +30,22 @@ $cakeDescription = 'OS Time';
     
     <?= $this->Html->script('../bower_components/modernizr/modernizr');?>
     <?php
-        $this->prepend('script');
-            echo $this->Html->script('../bower_components/jquery/dist/jquery');
-            echo $this->Html->script('../bower_components/fastclick/lib/fastclick');
-            echo $this->Html->script('../bower_components/foundation/js/foundation.min');
-            echo $this->Html->script('app'); 
+        $this->prepend('script', $this->Html->script('app'));
+        $this->prepend('script', $this->Html->script('../bower_components/foundation/js/foundation.min'));
+        $this->prepend('script', $this->Html->script('../bower_components/fastclick/lib/fastclick'));
+        $this->prepend('script', $this->Html->script('../bower_components/jquery/dist/jquery'));
+        
+        $this->start('jsGlobalVars');
+            echo "var webroot = '{$this->request->webroot}';";
+            echo "var action = '{$this->request->params['action']}/';";
+            echo "var controller = '{$this->request->params['controller']}/';";
         $this->end();
+        echo "<script type=\"text/javascript\">
+        //<![CDATA[
+        // global data for javascript\r";
+        echo $this->fetch('jsGlobalVars');
+        echo"\r//]]>
+        </script>";
     ?>
 
     <?= $this->fetch('meta') ?>

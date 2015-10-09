@@ -21,18 +21,9 @@
         </div>
         <?php
             foreach ($activities as $activity):
-            $row_class = "row status".$activity->status;
-            $row_id = "row_{$activity->id}";
+                echo $this->element('track_row', ['activity' => $activity]);
+            endforeach;
         ?>
-        <div class="<?=$row_class?>" id="<?=$row_id?>">
-                <div class="columns small-3"><?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?></div>
-                <div class="columns small-3"><?= h($activity->time_in) ?></div>
-                <div class="columns small-3"><?= h($activity->duration) ?></div>
-                <div class="columns small-3">
-                    <?= $this->Tk->timeFormActionButtons($activity->id, $activity->status);?>
-                </div>
-        </div>
-        <?php endforeach; ?>
         <div class="paginator">
             <ul class="pagination">
                 <?= $this->Paginator->prev('< ' . __('previous')) ?>

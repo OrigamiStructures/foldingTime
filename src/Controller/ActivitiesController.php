@@ -184,14 +184,14 @@ class ActivitiesController extends AppController
 	 */
     public function timeStop($id, $state = CLOSED) {
         $this->layout = 'ajax';
-        $time = date('Y-m-d H:i:s');
-        if($this->Activity->getRecordStatus($id) != PAUSED){
-            $this->request->data('Activity.time_out', $time);
+        $time = new \Cake\I18n\Time;
+        $activity = $this->Activities->get($id);
+        if($activity->status != PAUSED){
+            $activity->time_out = $time;
         }
-        $this->request->data('Activity.id', $id)
-                ->data('Activity.status', $state);
-        $element = $this->saveActivityChange($id);
-        $this->render($element);
+        $activity->status = $state;
+        $element = $this->saveActivityChange($activity);
+        $this->render($element, ['activity', $this->Activities->get($id)]);
     }
     
 	/**
@@ -216,8 +216,44 @@ class ActivitiesController extends AppController
         $this->saveDuration();
         $this->request->data('Activity.status', OPEN);
         $element = $this->saveActivityChange($id);
-        $this->render($element);
+        $this->render($element, ['activity' => $this->request->data[$id]]);
     }
-    
+
+    /**
+	 * Save time record and choose prepare view based on save result
+	 * 
+	 * @param string $id
+	 * @return string The element to render
+	 */
+    private function saveActivityChange($activity) {
+        if(!$this->Activities->save($activity)){
+            $this->Session->setFlash('The record update failed, please try again.');
+            $element = '/Element/ajax_flash';
+        } else {
+            $element = '/Element/track_row';
+        }
+        return $element;
+    }
+
+    /**
+	 * Set the users, projects and tasks viewVars for UI forms
+	 * 
+	 * @param string $type filtering desired for project/task lists
+	 */
+	private function setUiSelects($type = 'all') {
+        $UsersTable = \Cake\ORM\TableRegistry::get('Users');
+        $users = $UsersTable->find('list')
+                ->toArray();
+        $ProjectsTable = \Cake\ORM\TableRegistry::get('Projects');
+		$projects = $this->Activities->Projects->find('list')
+                ->where(['state' => 'active'])
+                ->toArray();
+        $TasksTable = \Cake\ORM\TableRegistry::get('Tasks');
+		$tasks = $this->Task->groupedTaskList($type);
+        $this->set(compact('users', 'projects', 'tasks'));
+		
+	}
+
+
 
 }
