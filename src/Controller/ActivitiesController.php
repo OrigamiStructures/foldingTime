@@ -85,6 +85,7 @@ class ActivitiesController extends AppController
      */
     public function edit($id = null)
     {
+        $this->layout = 'base';
         $activity = $this->Activities->get($id, [
             'contain' => []
         ]);

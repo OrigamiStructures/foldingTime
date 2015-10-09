@@ -1,7 +1,7 @@
 <?php
-//    $this->start('script');
-//        echo $this->Html->script('timekeep');
-//    $this->end();
+    $this->start('script');
+        echo $this->Html->script('timekeep');
+    $this->end();
 ?>
 
 <div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">

@@ -56,7 +56,7 @@ class TkHelper extends Helper {
         $this->index = $index;
         $buttons = array(
 			$this->duplicateButton(),
-            $this->actionButton('Info', 'click.timeInfo')
+            $this->editButton($status)
         );
         if($status & CLOSED){
             $buttons[] = $this->actionButton('Refresh', 'click.timeReopen');
@@ -96,6 +96,11 @@ class TkHelper extends Helper {
         } else {
             $button = $this->actionButton('Play', 'click.timeRestart');
         }
+        return $button;
+    }
+    
+    private function editButton($status) {
+        $button = $this->Html->link('Edit', ['action' => 'edit', $this->index]);
         return $button;
     }
     

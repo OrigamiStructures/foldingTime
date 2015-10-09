@@ -30,12 +30,11 @@ $cakeDescription = 'OS Time';
     
     <?= $this->Html->script('../bower_components/modernizr/modernizr');?>
     <?php
-        $this->start('script');
+        $this->prepend('script');
             echo $this->Html->script('../bower_components/jquery/dist/jquery');
             echo $this->Html->script('../bower_components/fastclick/lib/fastclick');
             echo $this->Html->script('../bower_components/foundation/js/foundation.min');
             echo $this->Html->script('app'); 
-            echo $this->Html->script('timekeep'); 
         $this->end();
     ?>
 
