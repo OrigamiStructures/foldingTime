@@ -6437,4 +6437,8 @@ article.summary {
     margin-bottom: 1rem;
     margin-left: 3rem; }
 
+button.micro, .button.micro {
+  font-size: 0.6875rem;
+  padding: 0.5rem; }
+
 /*# sourceMappingURL=main.css.map */
