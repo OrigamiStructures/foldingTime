@@ -95,7 +95,8 @@ class TkHelper extends Helper {
             'index' => $this->index, 
             'title' => 'Dup to a new record'
         ];
-        return $this->Html->link('Dupe', '', $attributes);
+        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-duplicate'));
+        return $this->Html->link($icon, '', $attributes);
 	}
     
     private function pauseButton($status) {
@@ -108,7 +109,8 @@ class TkHelper extends Helper {
     }
     
     private function editButton($status) {
-        $button = $this->Html->link($this->Html->tag('i', '', array('class' => 'glyphicon icon-trash')), '', ['action' => 'edit', $this->index]);
+        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-edit'));
+        $button = $this->Html->link($icon, ['action' => 'edit', $this->index], ['escape' => FALSE]);
         return $button;
     }
     
