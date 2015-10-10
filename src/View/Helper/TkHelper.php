@@ -100,15 +100,15 @@ class TkHelper extends Helper {
     
     private function pauseButton($status) {
         if($status & OPEN){
-            $button = $this->actionButton('Pause', 'click.timePause');
+            $button = $this->actionButton('glyphicon icon-pause', 'click.timePause');
         } else {
-            $button = $this->actionButton('Play', 'click.timeRestart');
+            $button = $this->actionButton('glyphicon icon-play', 'click.timeRestart');
         }
         return $button;
     }
     
     private function editButton($status) {
-        $button = $this->Html->link('Edit', ['action' => 'edit', $this->index]);
+        $button = $this->Html->link($this->Html->tag('i', '', array('class' => 'glyphicon icon-trash')), '', ['action' => 'edit', $this->index]);
         return $button;
     }
     
