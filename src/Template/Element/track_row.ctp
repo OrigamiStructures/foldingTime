@@ -1,4 +1,7 @@
 <?php
+$this->append('css');
+echo $this->Html->css('glyphicon');
+$this->end();
     $row_class = "row status".$activity->status;
     $row_id = "row_{$activity->id}";
 ?>

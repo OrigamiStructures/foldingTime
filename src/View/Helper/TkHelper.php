@@ -58,13 +58,21 @@ class TkHelper extends Helper {
 			$this->duplicateButton(),
             $this->editButton($status)
         );
+//        if($status & CLOSED){
+//            $buttons[] = $this->actionButton('Refresh', 'click.timeReopen');
+//            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
+//        } else {
+//            $buttons[] = $this->actionButton('Stop', 'click.timeStop');
+//            $buttons[] = $this->pauseButton($status);
+//            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
+//        }
         if($status & CLOSED){
-            $buttons[] = $this->actionButton('Refresh', 'click.timeReopen');
-            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
+            $buttons[] = $this->actionButton('glyphicon icon-refresh', 'click.timeReopen');
+            $buttons[] = $this->actionButton('glyphicon icon-trash', 'click.timeDelete');
         } else {
-            $buttons[] = $this->actionButton('Stop', 'click.timeStop');
+            $buttons[] = $this->actionButton('glyphicon icon-stop', 'click.timeStop');
             $buttons[] = $this->pauseButton($status);
-            $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
+            $buttons[] = $this->actionButton('glyphicon icon-trash', 'click.timeDelete');
         }
         return $this->Html->nestedList($buttons, array('class' => 'button-group round'), ['class' => 'micro button info']);
     }
@@ -76,8 +84,8 @@ class TkHelper extends Helper {
         if($bind != NULL){
             $attributes['bind'] = $bind;
         }
-//        return $this->Html->link($this->Html->tag('i', '', array('class' => $type)), '', $attributes);
-        return $this->Html->link($type, '', $attributes);
+        return $this->Html->link($this->Html->tag('i', '', array('class' => $type)), '', $attributes);
+//        return $this->Html->link($type, '', $attributes);
     }
 	
 	private function duplicateButton() {
