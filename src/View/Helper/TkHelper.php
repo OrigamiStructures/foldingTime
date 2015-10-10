@@ -66,7 +66,7 @@ class TkHelper extends Helper {
             $buttons[] = $this->pauseButton($status);
             $buttons[] = $this->actionButton('Delete', 'click.timeDelete');
         }
-        return $this->Html->nestedList($buttons, array('class' => 'button-bar'));
+        return $this->Html->nestedList($buttons, array('class' => 'button-group round'), ['class' => 'micro button info']);
     }
     
     private function actionButton($type, $bind = NULL) {
