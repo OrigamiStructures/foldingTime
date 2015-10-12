@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\I18n\Time;
 
 /**
  * Activities Controller
@@ -55,6 +56,9 @@ class ActivitiesController extends AppController
         $activity = $this->Activities->newEntity();
         if ($this->request->is('post')) {
             $activity = $this->Activities->patchEntity($activity, $this->request->data);
+            $activity->time_in = new Time();
+            $activity->time_out = $activity->time_in;
+            $activity->status = 1;
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -62,10 +66,9 @@ class ActivitiesController extends AppController
                 $this->Flash->error(__('The activity could not be saved. Please, try again.'));
             }
         }
-        $users = $this->Activities->Users->find('list', ['limit' => 200]);
+        $users = $this->Activities->Users->find('list');
         $projects = $this->Activities->Projects->find('list')
                 ->where(['state' => 'active']);
-        $groups = $this->Activities->Groups->find('list', ['limit' => 200]);
         $tasks = $this->Activities->Tasks->find('list')
                 ->where(['state' => 'active']);
         $statuses = [
@@ -74,7 +77,7 @@ class ActivitiesController extends AppController
             4 => 'CLOSED',
             8 => 'PAUSED'
         ];
-        $this->set(compact('activity', 'users', 'projects', 'groups', 'tasks', 'statuses'));
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
         $this->set('_serialize', ['activity']);
         $this->layout = 'base';
     }
@@ -94,6 +97,8 @@ class ActivitiesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->data);
+            $activity->time_in = new Time($activity->time_in_view);
+            $activity->time_out = new Time($activity->time_out_view);
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -103,7 +108,6 @@ class ActivitiesController extends AppController
         }
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $projects = $this->Activities->Projects->find('list', ['limit' => 200]);
-        $groups = $this->Activities->Groups->find('list', ['limit' => 200]);
         $tasks = $this->Activities->Tasks->find('list', ['limit' => 200]);
         $statuses = [
             1 => 'OPEN',
@@ -111,7 +115,9 @@ class ActivitiesController extends AppController
             4 => 'CLOSED',
             8 => 'PAUSED'
         ];
-        $this->set(compact('activity', 'users', 'projects', 'groups', 'tasks', 'statuses'));
+        $activity->time_in_view = $activity->time_in->i18nFormat();
+        $activity->time_out_view = $activity->time_out->i18nFormat();
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
         $this->set('_serialize', ['activity']);
     }
 

@@ -39,9 +39,6 @@ class ActivitiesTable extends Table
         $this->belongsTo('Projects', [
             'foreignKey' => 'project_id'
         ]);
-        $this->belongsTo('Groups', [
-            'foreignKey' => 'group_id'
-        ]);
         $this->belongsTo('Tasks', [
             'foreignKey' => 'task_id'
         ]);
@@ -88,7 +85,6 @@ class ActivitiesTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['project_id'], 'Projects'));
-        $rules->add($rules->existsIn(['group_id'], 'Groups'));
         $rules->add($rules->existsIn(['task_id'], 'Tasks'));
         return $rules;
     }

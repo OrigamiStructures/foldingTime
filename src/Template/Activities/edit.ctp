@@ -16,20 +16,13 @@
         <?php
             echo $this->Form->input('user_id', ['options' => $users, 'empty' => true]);
             echo $this->Form->input('project_id', ['options' => $projects, 'empty' => true]);
-            echo $this->Form->input('time_in');
-            echo $this->Form->input('time_out');
+            echo $this->Form->input('time_in_view', ['label' => 'Time In']);
+            echo $this->Form->input('time_out_view', ['label' => 'Time Out']);
             echo $this->Form->input('activity');
-            echo $this->Form->input('user');
-            echo $this->Form->input('project');
-            echo $this->Form->input('group_id', ['options' => $groups, 'empty' => true]);
             echo $this->Form->input('status');
             echo $this->Form->input('task_id', ['options' => $tasks, 'empty' => true]);
         ?>
     </fieldset>
-    <?= $this->Form->postLink( __('Delete'),
-                ['action' => 'delete', $activity->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $activity->id)]
-        ); ?>
     <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 </div>

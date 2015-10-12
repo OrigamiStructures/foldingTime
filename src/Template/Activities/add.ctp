@@ -14,16 +14,13 @@
     <fieldset>
         <legend><?= __('Add Activity') ?></legend>
         <?php
-            echo $this->Form->input('user_id', ['options' => $users, 'empty' => true]);
+            $default_user_id = $this->request->session()->read('Auth.User.id');
+            echo $this->Form->input('user_id', [
+                'options' => $users, 
+                'default' => $default_user_id]);
             echo $this->Form->input('project_id', ['options' => $projects, 'empty' => true]);
-            echo $this->Form->input('time_in');
-            echo $this->Form->input('time_out');
-            echo $this->Form->input('activity');
-            echo $this->Form->input('user');
-            echo $this->Form->input('project');
-            echo $this->Form->input('group_id', ['options' => $groups, 'empty' => true]);
-            echo $this->Form->input('status');
             echo $this->Form->input('task_id', ['options' => $tasks, 'empty' => true]);
+            echo $this->Form->input('activity');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>
