@@ -95,8 +95,8 @@ class TkHelper extends Helper {
             'index' => $this->index, 
             'title' => 'Dup to a new record'
         ];
-        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-plus'));
-        return $this->Html->link($icon.$icon, '', $attributes);
+        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-duplicate'));
+        return $this->Html->link($icon, '', $attributes);
 	}
     
     private function pauseButton($status) {
