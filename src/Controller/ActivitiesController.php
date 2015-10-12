@@ -63,9 +63,11 @@ class ActivitiesController extends AppController
             }
         }
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
-        $projects = $this->Activities->Projects->find('list', ['limit' => 200]);
+        $projects = $this->Activities->Projects->find('list')
+                ->where(['state' => 'active']);
         $groups = $this->Activities->Groups->find('list', ['limit' => 200]);
-        $tasks = $this->Activities->Tasks->find('list', ['limit' => 200]);
+        $tasks = $this->Activities->Tasks->find('list')
+                ->where(['state' => 'active']);
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
@@ -74,6 +76,7 @@ class ActivitiesController extends AppController
         ];
         $this->set(compact('activity', 'users', 'projects', 'groups', 'tasks', 'statuses'));
         $this->set('_serialize', ['activity']);
+        $this->layout = 'base';
     }
 
     /**
