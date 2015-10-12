@@ -6441,4 +6441,7 @@ button.micro, .button.micro {
   font-size: 0.6875rem;
   padding: 0.5rem; }
 
+div.top_row {
+  border-top: thin solid; }
+
 /*# sourceMappingURL=main.css.map */

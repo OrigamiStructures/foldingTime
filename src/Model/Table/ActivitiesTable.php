@@ -112,7 +112,7 @@ class ActivitiesTable extends Table
         list($days, $user) = $options['request']->params['pass'] + $default;
                 
 		$query->order(['Activities.time_in' => 'DESC']);
-        $query->contain(['Users', 'Projects']);
+        $query->contain(['Users', 'Projects', 'Tasks']);
    		$query->where(['Activities.time_in >=' => new DateTime("-$days days")]);
 
         if($user != 'ALL'){
