@@ -9,6 +9,11 @@
     <h3>Viewing: <?php //$activities->activity->user->name;?></h3>
 </div>
 <div class="actions columns large-2 medium-3">
+    <?php
+        $this->start('actions');
+            echo '<li>' . $this->Html->link(__('New Activity'), ['action' => 'add']) . '</li>';
+        $this->end();
+    ?>
     <?= $this->element('General/side-nav');?>
 </div>
 <?= $this->Form->create('Activity'); ?>
