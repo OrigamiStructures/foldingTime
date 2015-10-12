@@ -1,0 +1,122 @@
+/*
+Copyright 2015 Origami Structures
+*/
+/* 
+    Created on : Aug 19, 2015, 12:31:14 PM
+    Author     : jasont
+*/
+@import "settings";
+@import "../bower_components/foundation/scss/foundation";
+@import "_main-page.scss";
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web|Unna);
+
+
+footer {
+    background: black none repeat scroll 0 0;
+    height: $topbar-height;
+    margin: 10px 0 0;
+    width: 100%;
+    //padding-left: 10px;
+    vertical-align: baseline;
+}
+
+.row.status1{
+    background-color: rgb(184, 243, 199);
+}
+
+.row.status8{
+    background-color: rgb(255, 198, 185);
+}
+
+
+pre {
+    margin-bottom: 1.25rem;
+	padding: .5rem .5rem .5rem 1.5rem;
+	overflow-x: scroll;
+}
+
+pre, code {
+	background-color: desaturate(lighten($dk_green, 78%), 50%);
+}
+
+code {
+	border: none;
+	font-family: Courier,monospace;
+	font-size: 1rem;
+	color: #008;
+}
+
+div.sidebar {
+	padding-top: 1.25rem;
+	margin-top: 3px;
+	
+	h1 {
+		font-size: 1.25rem;
+		margin-top: 0;
+		line-height: 1rem;
+	}
+	
+	fieldset {
+		padding: .4rem;
+		padding-top: rem-calc(2);
+		
+		div.submit > input {
+			margin: .5rem 0 0;
+			background-color: #e7e7e7;
+			color: #27587f;
+			font-size: 100%;
+			
+		}
+	}
+	
+	select {
+		margin: 0;
+	}
+}
+
+section.toc, div.sidebar {
+	
+	ul {
+		font-size: 1rem;
+	}
+
+}
+
+section.info{
+    p{
+        margin-bottom: 0;
+        font-size: 80%;
+    }
+    h1{
+        margin-bottom: 40%;
+    }
+    section.publication_details{
+        p.published, *.copyright{
+            @include grid-column(
+                $columns: 11,
+                $offset: 1
+                );
+            padding-left: 0;
+        }
+    }
+}
+
+article.summary {
+    border-left: medium solid desaturate(lighten($dk-blue, 70%), 40%);
+    border-top: 1rem solid desaturate(lighten($dk-green, 75%), 40%);
+    padding-left: 1rem;
+	
+	section[itemprop="description"] {
+		p:last-of-type {
+			margin-bottom: 0.05rem;
+		}
+		h5.more {
+			margin-bottom: 1rem;
+			margin-left: 3rem;
+		}
+	}
+}
+button.micro, .button.micro {
+    font-size: 0.6875rem;
+    padding: 0.5rem;
+}

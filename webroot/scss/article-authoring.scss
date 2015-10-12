@@ -1,0 +1,148 @@
+@import "/Library/WebServer/Documents/OStructures/webroot/bower_components/foundation/scss/foundation/components/grid";
+
+@import "/Library/WebServer/Documents/OStructures/webroot/scss/height-block.scss";
+
+#container {
+    margin: 0 0.9375em;
+    // @include tall(100);
+}
+
+div#content, div#content > div.row {
+    @include tall(100);
+}
+
+.edit-zone {
+    background: wheat;
+}
+
+.preview-zone {
+    // overflow: scroll;
+    // background: lightblue;
+    
+    img {
+        max-width: 100%;
+    }
+}
+
+fieldset {
+    padding: 0;
+    margin: .5em 0;
+    border: none;
+    
+    .inner {
+        margin: 0;
+    }
+}
+
+button.tiny#maximize {
+    padding-top: 5px;
+    padding-bottom: 6px;
+    float: right;
+    margin-bottom: -4px;
+}
+
+button {
+    border-radius: .25em;
+}
+
+/*small*/
+
+@media only screen{
+
+    .edit-zone {
+        background: oldlace;
+        /*@include tall(60);*/
+        @include grid-column(12);
+    }
+
+    .resource-zone {
+        /*@include tall(auto);*/
+        ul{
+            margin-left: 0;
+        }
+        @include grid-column(12);
+        backround-color: taupe;
+        .resourceImage{
+            @include grid-column(7);
+        }
+		
+        .MarkdownImageLink, .MarkdownArticleLink, .resourceArticle {
+            overflow: hidden;
+            line-height: 100%;
+        }
+		
+       .resourceArticle {
+            font-size: 80%;
+			margin-bottom: .5em;
+        }
+		
+        .MarkdownImageLink, .MarkdownArticleLink {
+			color: #888;
+            font-size: 50%;
+            height: 40px;
+        }
+		
+        .MarkdownImageLink{
+            @include grid-column(5);
+        }
+		
+		.resourceArticle, .MarkdownArticleLink {
+			@include grid-column(12);
+		}
+    }
+
+    .preview-zone{
+        /*@include tall(40);*/
+        @include grid-column(12);
+    }
+    
+}
+
+/*Medium*/
+@media only screen and (min-width:40.063em){
+    
+    .edit-zone {
+        @include grid-column(8);
+        background: wheat;
+    }
+
+    .resource-zone {
+        @include grid-column($columns:4, $float:right);
+    }
+    
+    .preview-zone {
+        @include grid-column(12);
+    }
+    
+
+}
+/*large*/
+@media only screen and (min-width:64.063em){
+    
+    .edit-zone {
+        /*@include tall(100);*/
+        @include grid-column(5);
+        background: goldenrod;
+    }
+    .resource-zone {
+        @include grid-column($columns:2, $float:right);
+    }
+    .preview-zone {
+        /*@include tall(100);*/
+        @include grid-column(5);
+    }
+
+}
+
+    @media #{$small-up} {
+        @include height-set($range:sm);
+    }
+    
+    @media #{$medium-up} {
+        @include height-set($range:md);
+    }
+    
+    @media #{$large-up} {
+        @include height-set($range:lrg);
+    }
+
