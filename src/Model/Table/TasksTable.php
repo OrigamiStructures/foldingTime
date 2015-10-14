@@ -77,4 +77,20 @@ class TasksTable extends Table
         $rules->add($rules->existsIn(['project_id'], 'Projects'));
         return $rules;
     }
+    
+    /**
+     * Find all tasks grouped by project
+     * 
+     * @param Query $query
+     * @param type $options
+     * @return Query
+     */
+    public function findTasksByProject(Query $query, $options = []) {
+        $options += ['where' => NULL];
+        $query->find('list', [
+            'groupField' => 'project_id'
+        ]);
+        $query->where($options['where']);
+        return $query;
+    }
 }

@@ -69,8 +69,7 @@ class ActivitiesController extends AppController
         $users = $this->Activities->Users->find('list');
         $projects = $this->Activities->Projects->find('list')
                 ->where(['state' => 'active']);
-        $tasks = $this->Activities->Tasks->find('list')
-                ->where(['state' => 'active']);
+        $tasks = $this->Activities->Tasks->find('tasksByProject', ['where' => ['state' => 'active']]);
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
@@ -113,6 +112,7 @@ class ActivitiesController extends AppController
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $projects = $this->Activities->Projects->find('list', ['limit' => 200]);
         $tasks = $this->Activities->Tasks->find('list', ['limit' => 200]);
+        $allTasks = $this->jsonTasks($this->Activities->Tasks->find('tasksByProject'));
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
@@ -121,7 +121,7 @@ class ActivitiesController extends AppController
         ];
         $activity->time_in_view = $activity->time_in->i18nFormat();
         $activity->time_out_view = $activity->time_out->i18nFormat();
-        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses', 'allTasks'));
         $this->set('_serialize', ['activity']);
     }
 
@@ -304,6 +304,21 @@ class ActivitiesController extends AppController
             $this->set('element', 'error');
         }
         $this->render('/Element/json_return');
+    }
+    
+    public function jsonTasks($tasks) {
+        $output = '';
+        foreach ($tasks as $proj_id => $proj_tasks) {
+            $output .= "{'$proj_id':{\n";
+            foreach ($proj_tasks as $key => $value) {
+                $output .= "{'$key':'$value',\n";
+            }
+            trim($output, ",\n");
+            $output .= "},\n";
+        }
+        trim($output,",\n");
+        $output .= "}";
+        return $output;
     }
 
 

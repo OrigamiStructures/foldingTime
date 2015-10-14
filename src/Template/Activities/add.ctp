@@ -1,3 +1,9 @@
+<?php
+    $tasks_json = json_encode($tasks);
+    $this->start('jsGlobalVars');
+        echo "tasks = {$tasks_json};";
+    $this->end();
+?>
 <div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
 </div>
 <div class="actions columns large-2 medium-3">

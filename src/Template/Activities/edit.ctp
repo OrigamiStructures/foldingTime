@@ -1,3 +1,13 @@
+<?php
+    $this->append('script');
+        echo $this->Html->script('edit');
+    $this->end();
+?>
+<?php
+    $this->start('jsGlobalVars');
+        echo "tasks = {$allTasks};";
+    $this->end();
+?>
 <div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
 </div>
 <div class="actions columns large-2 medium-3">
