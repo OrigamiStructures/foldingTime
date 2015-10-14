@@ -294,6 +294,25 @@ class ActivitiesController extends AppController
         $this->render('/Element/json_return');
     }
     
+    /**
+     * Delete an activity row
+     */
+    public function deleteActivityRow($id) {
+        $this->layout = 'ajax';
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $this->set('activity', $activity);
+        if ($this->Activities->delete($activity)) {
+            $this->set('success', TRUE);
+            $this->set('element', 'track_row');
+        } else {
+            $this->Flash->set('The delete failed, please try again.');
+            $this->set('success', FALSE);
+            $this->set('element', 'error');
+        }
+        $this->render('/Element/json_return');
+    }
 
 
 
