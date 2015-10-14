@@ -314,13 +314,14 @@ function hideDurationInput(e) {
     $.ajax({
         type: "GET",
         url: webroot + controller + "duplicateTimeRow/" + $(e.currentTarget).attr('index'),
-        dataType: "html",
+        dataType: "JSON",
         success: function (data) {
-            $('#TimeTrackForm tbody').append(data);
-            updateTableClassing();
-            updateTableSortability();
-            bindHandlers('table.sortable tr.last');
-            initToggles();
+            if(data.success){
+                $('section.activities').prepend(data.result);
+                bindHandlers('div.activities');
+            } else {
+                $('#flash_message').html(data.result);
+            }
         },
         error: function () {
             alert('Error adding the time row.')

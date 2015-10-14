@@ -268,6 +268,32 @@ class ActivitiesController extends AppController
         $this->set(compact('users', 'projects', 'tasks'));
 		
 	}
+    
+	/**
+	 * Duplicate a record for a new activity record
+	 */
+    public function duplicateTimeRow($id) {
+        $this->layout = 'ajax';
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $dupe = $this->Activities->newEntity();
+        $dupe->activity = $activity->activity;
+        $dupe->project_id = $activity->project_id;
+        $dupe->task_id = $activity->task_id;
+        $dupe->user_id = $this->request->session()->read('Auth.User.id');
+        $dupe->time_in = new Time();
+        $dupe->time_out = $dupe->time_in;
+        $dupe->status = 1;
+        $this->saveActivityChange($dupe);
+        $id = $dupe->id;
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $this->set('activity', $activity);
+        $this->render('/Element/json_return');
+    }
+    
 
 
 

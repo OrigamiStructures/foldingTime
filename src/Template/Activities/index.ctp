@@ -28,11 +28,13 @@
             </div>
             <div class="columns small-3"><?= __('Actions') ?></div>
         </div>
-        <?php
-            foreach ($activities as $activity):
-                echo $this->element('track_row', ['activity' => $activity]);
-            endforeach;
-        ?>
+        <section class="activities">
+            <?php
+                foreach ($activities as $activity):
+                    echo $this->element('track_row', ['activity' => $activity]);
+                endforeach;
+            ?>
+        </section>
         <div class="paginator">
             <ul class="pagination">
                 <?= $this->Paginator->prev('< ' . __('previous')) ?>
