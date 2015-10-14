@@ -58,7 +58,9 @@ $cakeDescription = 'OS Time';
     <div id="container">
 
         <div id="content">
-            <?= $this->Flash->render() ?>
+            <div id="flash_message">
+                <?= $this->Flash->render() ?>                
+            </div>
 
             <div class="row">
                 <?= $this->fetch('content') ?>

@@ -34,12 +34,12 @@ function timeChange(e, action) {
     $.ajax({
         type: "GET",
         url: webroot + controller + action + "/" + id,
-        dataType: "HTML",
+        dataType: "JSON",
         success: function (data) {
-            if (data.match(/<tr/) != null) {
-                replaceRow(data, id);
+            if (data.success) {
+                replaceRow(data.result, id);
             } else {
-                $('#row_' + id).before('<tr><td colspan="5" class="flashmessage"' + data + '</td></tr>');
+                $('#flash_message').html(data.result);
             }
         },
         error: function () {
@@ -151,9 +151,6 @@ function saveTimeEdit(e) {
 function replaceRow(data, id) {
     $('#row_' + id).replaceWith(data);
     bindHandlers('#row_' + id);
-    initToggles('#row_' + id);
-    updateTableClassing();
-    updateTableSortability();
 }
 
 /**

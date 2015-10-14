@@ -194,13 +194,16 @@ class ActivitiesController extends AppController
     public function timeStop($id, $state = CLOSED) {
         $this->layout = 'ajax';
         $time = new \Cake\I18n\Time;
-        $activity = $this->Activities->get($id);
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
         if($activity->status != PAUSED){
             $activity->time_out = $time;
         }
         $activity->status = $state;
-        $element = $this->saveActivityChange($activity);
-        $this->render($element, ['activity', $this->Activities->get($id)]);
+        $this->saveActivityChange($activity);
+        $this->set(compact('activity'));
+        $this->render('/Element/json_return');
     }
     
 	/**
@@ -224,8 +227,10 @@ class ActivitiesController extends AppController
                 ->data('value', $duration);
         $this->saveDuration();
         $this->request->data('Activity.status', OPEN);
-        $element = $this->saveActivityChange($id);
-        $this->render($element, ['activity' => $this->request->data[$id]]);
+        $this->saveActivityChange($id);
+        $this->set(compact($activity));
+        $this->render('/Element/json_return');
+//        $this->render($element, ['activity' => $this->request->data[$id]]);
     }
 
     /**
@@ -236,12 +241,13 @@ class ActivitiesController extends AppController
 	 */
     private function saveActivityChange($activity) {
         if(!$this->Activities->save($activity)){
-            $this->Session->setFlash('The record update failed, please try again.');
-            $element = '/Element/ajax_flash';
+            $this->Flash->set('The record update failed, please try again.');
+            $this->set('success', FALSE);
+            $this->set('element', 'error');
         } else {
-            $element = '/Element/track_row';
+            $this->set('success', TRUE);
+            $this->set('element', 'track_row');
         }
-        return $element;
     }
 
     /**
