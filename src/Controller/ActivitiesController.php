@@ -97,8 +97,12 @@ class ActivitiesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->data);
-            $activity->time_in = new Time($activity->time_in_view);
-            $activity->time_out = new Time($activity->time_out_view);
+            if($activity->getOriginal('duration') != $this->request->data['duration']){
+                $activity = $this->changeDuration($activity, $this->request->data['duration']);
+            } else {
+                $activity->time_in = new Time($activity->time_in_view);
+                $activity->time_out = new Time($activity->time_out_view);
+            }
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -157,8 +161,8 @@ class ActivitiesController extends AppController
         $this->render('/Elements/json_return');
     }
     
-    private function changeDuration($activity) {
-        $durr = $activity->duration * HOUR;
+    private function changeDuration($activity, $durr = FALSE) {
+        $durr = $durr ? $durr * HOUR : $activity->duration * HOUR;
         $activity->time_in = new Time("$durr seconds ago");
         $activity->time_out = new Time();
         return $activity;

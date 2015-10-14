@@ -11,7 +11,7 @@ $this->end();
         <div class="row">
             <div class="columns small-4"><?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?></div>
             <div class="columns small-6"><?= h($activity->time_in) ?></div>
-            <div class="columns small-2"><?= h(Cake\I18n\Number::precision($activity->duration, 2)) ?></div>
+            <div class="columns small-2"><?= h($activity->duration) ?></div>
         </div>
         <div class="row">
             <div class="columns small-4"><?= $activity->has('task') ? h($activity->task->name) : '' ?></div>
