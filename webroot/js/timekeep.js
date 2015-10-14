@@ -313,7 +313,7 @@ function hideDurationInput(e) {
     e.preventDefault();
     $.ajax({
         type: "GET",
-        url: webroot + controller + "duplicateTimeRow/" + $(e.currentTarget).attr('index'),
+        url: webroot + controller + "duplicateActivityRow/" + $(e.currentTarget).attr('index'),
         dataType: "JSON",
         success: function (data) {
             if(data.success){
