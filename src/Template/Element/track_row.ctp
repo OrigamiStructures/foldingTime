@@ -7,7 +7,7 @@ $this->end();
 ?>
 
 <div class="<?=$row_class . ' top_row'?>" id="<?=$row_id?>">
-    <div class="columns small-10">
+    <div class="columns small-9">
         <div class="row">
             <div class="columns small-4"><?= $activity->has('project') ? $this->Html->link($activity->project->name, ['controller' => 'Projects', 'action' => 'view', $activity->project->id]) : '' ?></div>
             <div class="columns small-6"><?= h($activity->time_in) ?></div>
@@ -18,7 +18,7 @@ $this->end();
             <div class="columns small-8"><?= h($activity->activity) ?></div>
         </div>
     </div>
-    <div class="columns small-2">
+    <div class="columns small-3">
         <?= $this->Tk->timeFormActionButtons($activity->id, $activity->status);?>
     </div>
 </div>

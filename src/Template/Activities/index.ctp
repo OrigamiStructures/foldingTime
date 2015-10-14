@@ -19,14 +19,14 @@
 <?= $this->Form->create('Activity'); ?>
     <div class="activities index large-10 medium-9 columns">
         <div class="row">
-            <div class="columns small-10">
+            <div class="columns small-9">
                 <div class="row">
                     <div class="columns small-4"><?= $this->Paginator->sort('project_id') ?></div>
                     <div class="columns small-6"><?= $this->Paginator->sort('time_in') ?></div>
                     <div class="columns small-2"><?= $this->Paginator->sort('duration') ?></div>
                 </div>
             </div>
-            <div class="columns small-2"><?= __('Actions') ?></div>
+            <div class="columns small-3"><?= __('Actions') ?></div>
         </div>
         <?php
             foreach ($activities as $activity):
