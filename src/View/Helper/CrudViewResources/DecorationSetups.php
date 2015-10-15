@@ -2,12 +2,18 @@
 
 namespace App\View\Helper\CrudViewResources;
 
+use CrudViews\View\Helper\CRUD\Decorator\BasicDecorationSetups;
 use CrudViews\View\Helper\CRUD\Decorator;
 use Cake\Utility\Text;
 use CrudViews\View\Helper\CRUD\CrudFields;
+use CrudViews\View\Helper\CRUD\Decorator\TableCellDecorator;
+use CrudViews\View\Helper\CRUD\Decorator\BelongsToDecorator;
+use CrudViews\View\Helper\CRUD\Decorator\BelongsToSelectDecorator;
+use CrudViews\View\Helper\CRUD\Decorator\LiDecorator;
+use CrudViews\View\Helper\CRUD\Decorator\LinkDecorator;
 
 /**
- * FieldSetups are your customer output configurations
+ * DecorationSetups are your custom output configurations
  * 
  * The method name is the the name you'll invoke them by.
  * They should return some CrudFields sub-class possibly 
@@ -22,14 +28,7 @@ use CrudViews\View\Helper\CRUD\CrudFields;
  *
  * @author dondrake
  */
-class FieldSetups {
-	
-	protected $helper;
-
-
-	public function __construct($helper) {
-		$this->helper = $helper;
-	}
+class DecorationSetups extends BasicDecorationSetups {
 	
 	/**
 	 * Return the decorated output for the status method
@@ -41,9 +40,9 @@ class FieldSetups {
 	 * @return \App\View\Helper\CRUD\Decorator\TableCellDecorator
 	 */
 	public function status($helper) {
-		return new Decorator\TableCellDecorator(
+		return new TableCellDecorator(
 //				new Decorator\LabelDecorator(
-				new Decorator\BelongsToDecorator(
+				new BelongsToDecorator(
 				new CrudFields($helper)
 		));
 	}
@@ -58,16 +57,16 @@ class FieldSetups {
 	 * @return \App\View\Helper\CRUD\Decorator\TableCellDecorator
 	 */
 	public function menuIndex($helper) {
-		return new Decorator\TableCellDecorator(
+		return new TableCellDecorator(
 //				new Decorator\LabelDecorator(
-				new Decorator\BelongsToSelectDecorator(
+				new BelongsToSelectDecorator(
 				new CrudFields($helper)
 		));
 	}
 	
 	public function liLink($helper) {
-		return new Decorator\LiDecorator(
-				new Decorator\LinkDecorator(
+		return new LiDecorator(
+				new LinkDecorator(
 				new CrudFields($helper)
 				));
 	}
@@ -82,35 +81,4 @@ class FieldSetups {
         return $this->status($helper);
     }
 	
-	/**
-	 * Show some of long text and hide all for flyout
-	 * 
-	 * When there is a lot of text for a small area, this shows just the 
-	 * truncated lead. The full text is in an element that is hidden. 
-	 * Javascript can implement a flyout to show the full thing.
-	 * 
-	 * @param type $helper
-	 */
-	public function leadPlus($field, $options) {
-		$hidden = $this->helper->Html->div(
-				'full_text',
-				$this->helper->Html->para(
-						null, 
-						$this->helper->entity->$field
-					), 
-					['style' => 'position: absolute; display: none;']
-				);
-		return $this->helper->Html->tag(
-				'span', 
-				Text::truncate($this->helper->entity->$field, 100) .
-				$hidden
-			);
-	}
-    
-    public function duration($field, $options) {
-//        debug($this->helper);
-//        die;
-        return round($this->helper->entity->duration, 2);
-    }
-
 }
