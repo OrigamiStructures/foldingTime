@@ -307,11 +307,12 @@ class ActivitiesController extends AppController
     }
     
     public function jsonTasks($tasks) {
-        $output = '';
+        $output = '{';
         foreach ($tasks as $proj_id => $proj_tasks) {
-            $output .= "{'$proj_id':{\n";
+            $output .= "'$proj_id':{\n";
             foreach ($proj_tasks as $key => $value) {
-                $output .= "{'$key':'$value',\n";
+                $html_val = h($value);
+                $output .= "'$key':'{$html_val}',\n";
             }
             trim($output, ",\n");
             $output .= "},\n";

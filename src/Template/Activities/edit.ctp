@@ -5,7 +5,7 @@
 ?>
 <?php
     $this->start('jsGlobalVars');
-        echo "tasks = {$allTasks};";
+        echo "var tasks = {$allTasks};";
     $this->end();
 ?>
 <div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
