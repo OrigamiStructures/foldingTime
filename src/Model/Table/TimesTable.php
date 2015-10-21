@@ -116,12 +116,31 @@ class TimesTable extends Table
         list($days, $user) = $options['request']->params['pass'] + $default;
                 
 		$query->order(['Times.time_in' => 'DESC']);
-        $query->contain(['Users', 'Projects']);
-   		$query->where(['Times.time_in >=' => new DateTime("-$days days")]);
+//        $query->contain(['Users', 'Projects']);
+   		$query->where(['Times.time_in >=' => new DateTime("-180 days")]);
 
-        if($user != 'ALL'){
-			$query->where(['Times.user_id' => $user]);
-		}
+//        if($user != 'ALL'){
+//			$query->where(['Times.user_id' => $user]);
+//		}
+        
+        //This is the new shit, delte it
+        
+        $final_set = $query->filter(function($value, $key){
+            return $value->duration > 8;
+        });
+        
+//        \App\Lib\dmDebug::ddd($query->toArray());
+        $final_set = $final_set->map(function($value, $key){
+            $return = [];
+            $return['durr'] = $value->duration;
+            $return['id'] = $value->id;
+            return $return;
+        });
+        $final_set = $final_set->sortBy('durr');
+        \App\Lib\dmDebug::ddd($final_set->toArray());
+        die;
+        
+        //end new shit
 
         return $query;
 	}

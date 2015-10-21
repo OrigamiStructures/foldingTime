@@ -70,13 +70,14 @@ class ActivitiesController extends AppController
         $projects = $this->Activities->Projects->find('list')
                 ->where(['state' => 'active']);
         $tasks = $this->Activities->Tasks->find('tasksByProject', ['where' => ['state' => 'active']]);
+        $allTasks = $this->jsonTasks($this->Activities->Tasks->find('tasksByProject'));
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
             4 => 'CLOSED',
             8 => 'PAUSED'
         ];
-        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses', 'allTasks'));
         $this->set('_serialize', ['activity']);
         $this->layout = 'base';
     }
@@ -108,6 +109,10 @@ class ActivitiesController extends AppController
             } else {
                 $this->Flash->error(__('The activity could not be saved. Please, try again.'));
             }
+        }
+        \App\Lib\dmDebug::ddd($this->request->params);
+        if(isset($this->request->named['project_id'])){
+            $activity->project_id = $this->request->named['project_id'];
         }
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $projects = $this->Activities->Projects->find('list', ['limit' => 200]);

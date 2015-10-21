@@ -62,18 +62,33 @@ class ProjectsController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($proj = NULL, $redir = FALSE)
     {
         $project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->data);
             if ($this->Projects->save($project)) {
                 $this->Flash->success(__('The project has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                if(isset($this->request->data['redir'])){
+                    $redir = $this->request->data['redir'] . "/project_id:{$project->id}";
+                    return $this->redirect($redir);
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
             } else {
                 $this->Flash->error(__('The project could not be saved. Please, try again.'));
             }
         }
+        if(!is_null($proj)){
+            $project_client = $this->Projects->get($proj);
+            $project->client_id = $project_client->client_id;
+        }
+        if($redir){
+            $this->Projects->schema()->addColumn('redir', 'string');
+            $project->redir = $this->request->referer();
+        }
+        $this->_CrudData->load('Projects')->whitelist(['client_id', 'name', 'note', 'state', 'redir']);
+        $this->_CrudData->load('Projects')->attributes(['redir' => ['type'=> 'hidden']]);
         $clients = $this->Projects->Clients->find('list', ['limit' => 200]);
         $this->set(compact('project', 'clients'));
         $this->set('_serialize', ['project']);

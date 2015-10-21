@@ -17,6 +17,7 @@ namespace App\Controller;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use App\Lib\dmDebug;
+use Cake\Routing\Router;
 use CrudViews\Controller\AppController as BaseController;
 
 /**
@@ -75,6 +76,7 @@ class AppController extends BaseController {
 	 */
 	public function beforeFilter(Event $event) {
 			parent::beforeFilter($event);
+            Router::parseNamedParams($this->request);
 //			$this->Auth->allow(['index', 'view', 'display', 'edit']);
 	}
 
