@@ -70,8 +70,15 @@ class TasksController extends AppController
             $this->Tasks->schema()->addColumn('redir', 'string');
             $task->redir = $this->request->referer();
         }
-        $this->_CrudData->load('Tasks')->whitelist(['project_id', 'name', 'note', 'state', 'redir']);
-        $this->_CrudData->load('Tasks')->attributes(['redir' => ['type'=> 'hidden']]);
+		
+		// JASON JASON JASON JASON JASON JASON
+		// ===================================
+		// I would recommend something like this to avoid the overhead of 
+		// calling CrudData->load() multiple times. Slightly shorter too
+		$tasksConfig = $this->_CrudData->load('Tasks');
+        $tasksConfig->whitelist(['project_id', 'name', 'note', 'state', 'redir']);
+        $tasksConfig->attributes(['redir' => ['type'=> 'hidden']]);
+		
         $projects = $this->Tasks->Projects->find('list', ['limit' => 200]);
         $projects->where(['Projects.state' => 'active']);
         $states = ['active', 'inactive'];
