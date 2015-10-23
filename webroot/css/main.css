@@ -6442,6 +6442,13 @@ button.micro, .button.micro {
   padding: 0.5rem; }
 
 div.top_row {
-  border-top: thin solid black; }
+  border-top: thin solid; }
+
+div.header-title {
+  background-color: #d4ded4;
+  margin-bottom: 2px; }
+  div.header-title h1 {
+    display: inline;
+    vertical-align: middle; }
 
 /*# sourceMappingURL=main.css.map */

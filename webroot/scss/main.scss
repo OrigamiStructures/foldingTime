@@ -122,5 +122,15 @@ button.micro, .button.micro {
 }
 
 div.top_row {
-    border-top: thin solid black;
+    border-top: thin solid;
+}
+
+
+div.header-title {
+    background-color: $background-green;
+    margin-bottom: 2px;
+    h1{
+        display: inline;
+        vertical-align: middle;
+    }
 }
