@@ -30,23 +30,10 @@ use CrudViews\View\Helper\CRUD\Decorator\LinkDecorator;
  */
 class DecorationSetups extends BasicDecorationSetups {
 	
-	/**
-	 * Return the decorated output for the status method
-	 * 
-	 * This example method 'status' returns the same as the 'index' base action.
-	 * It is provided as an example of what you can do with alternate actions.
-	 * 
-	 * @param type $helper
-	 * @return \App\View\Helper\CRUD\Decorator\TableCellDecorator
-	 */
-	public function status($helper) {
-		return new TableCellDecorator(
-//				new Decorator\LabelDecorator(
-				new BelongsToDecorator(
-				new CrudFields($helper)
-		));
+	public function __construct($helper) {
+		return parent::__construct($helper);
 	}
-
+	
 	/**
 	 * Return the decorated output for the menuIndex method
 	 * 
@@ -78,7 +65,7 @@ class DecorationSetups extends BasicDecorationSetups {
      * @return \App\View\Helper\CrudViewResources\TableCellDecorator
      */
     public function projectTime($helper) {
-        return $this->status($helper);
+		return $this->index($helper);
     }
 	
 }
