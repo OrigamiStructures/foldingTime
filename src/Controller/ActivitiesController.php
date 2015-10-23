@@ -110,9 +110,11 @@ class ActivitiesController extends AppController
                 $this->Flash->error(__('The activity could not be saved. Please, try again.'));
             }
         }
-        \App\Lib\dmDebug::ddd($this->request->params);
         if(isset($this->request->named['project_id'])){
             $activity->project_id = $this->request->named['project_id'];
+        }
+        if(isset($this->request->named['task_id'])){
+            $activity->task_id = $this->request->named['task_id'];
         }
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $projects = $this->Activities->Projects->find('list', ['limit' => 200]);

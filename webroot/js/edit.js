@@ -4,12 +4,19 @@
 
 $(document).ready(function(){
     updateTaskList();
+    updateNewTaskButton();
+    updateNewProjectButton();
 })
+
+function chooseProject(){
+    updateTaskList();
+    updateNewTaskButton();
+    updateNewProjectButton();
+}
 
 function updateTaskList(){
     var project_id = $('select#project-id').val();
     var task_id = $('select#task-id').val();
-    //    <select id="task-id" name="task_id"><option value=""></option><option value="16">MenuRefactor</option><option value="17">ProductPurchase</option>
     
     if (project_id != "") {
         var list = tasks[project_id];
@@ -24,4 +31,14 @@ function updateTaskList(){
         }
         $('select#task-id').html(select);
     }
+}
+
+function updateNewTaskButton(){
+    var replacement = 'tasks/add/' + $('select#project-id').val() + '/1'; 
+    $('li.newTaskButton a').attr('href', replacement);
+}
+
+function updateNewProjectButton(){
+    var replacement = 'projects/add/' + $('select#project-id').val() + '/1'; 
+    $('li.newProjectButton a').attr('href', replacement);
 }

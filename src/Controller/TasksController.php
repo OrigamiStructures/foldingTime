@@ -46,20 +46,36 @@ class TasksController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($proj = NULL, $redir = FALSE)
     {
         $task = $this->Tasks->newEntity();
         if ($this->request->is('post')) {
             $task = $this->Tasks->patchEntity($task, $this->request->data);
             if ($this->Tasks->save($task)) {
                 $this->Flash->success(__('The task has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                if(isset($this->request->data['redir'])){
+                    $redir = $this->request->data['redir'] . "/task_id:{$task->id}";
+                    return $this->redirect($redir);
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
             } else {
                 $this->Flash->error(__('The task could not be saved. Please, try again.'));
             }
         }
+        if(!is_null($proj)){
+            $task->project_id = $proj;
+        }
+        if($redir){
+            $this->Tasks->schema()->addColumn('redir', 'string');
+            $task->redir = $this->request->referer();
+        }
+        $this->_CrudData->load('Tasks')->whitelist(['project_id', 'name', 'note', 'state', 'redir']);
+        $this->_CrudData->load('Tasks')->attributes(['redir' => ['type'=> 'hidden']]);
         $projects = $this->Tasks->Projects->find('list', ['limit' => 200]);
-        $this->set(compact('task', 'projects'));
+        $projects->where(['Projects.state' => 'active']);
+        $states = ['active', 'inactive'];
+        $this->set(compact('task', 'projects', 'states'));
         $this->set('_serialize', ['task']);
     }
 
