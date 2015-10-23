@@ -4,10 +4,6 @@
     $this->end();
 ?>
 
-<div class="panel callout radius large-10 medium-9 large-offset-2 medium-offset-3">
-    <p>The URL can accept 2 optional args '{host}/activities/index/{days}/{user_id}' where days and user_id are integers</p>
-    <h3>Viewing: <?php //$activities->activity->user->name;?></h3>
-</div>
 <div class="actions columns large-2 medium-3">
     <?php
         $this->start('actions');

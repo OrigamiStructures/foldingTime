@@ -133,4 +133,14 @@ div.header-title {
         display: inline;
         vertical-align: middle;
     }
+    span {
+        div{
+            display: none;
+        }
+        :hover {
+            div{
+                display: inline-block;
+            }
+        }
+    }
 }

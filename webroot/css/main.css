@@ -6450,5 +6450,9 @@ div.header-title {
   div.header-title h1 {
     display: inline;
     vertical-align: middle; }
+  div.header-title span div {
+    display: none; }
+  div.header-title span :hover div {
+    display: inline-block; }
 
 /*# sourceMappingURL=main.css.map */
