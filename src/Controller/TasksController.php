@@ -77,7 +77,7 @@ class TasksController extends AppController
 		// calling CrudData->load() multiple times. Slightly shorter too
 		$tasksConfig = $this->_CrudData->load('Tasks');
         $tasksConfig->whitelist(['project_id', 'name', 'note', 'state', 'redir']);
-        $tasksConfig->attributes(['redir' => ['type'=> 'hidden']]);
+        $tasksConfig->addAttributes('redir', ['input' => ['type'=> 'hidden']]);
 		
         $projects = $this->Tasks->Projects->find('list', ['limit' => 200]);
         $projects->where(['Projects.state' => 'active']);

@@ -87,8 +87,9 @@ class ProjectsController extends AppController
             $this->Projects->schema()->addColumn('redir', 'string');
             $project->redir = $this->request->referer();
         }
-        $this->_CrudData->load('Projects')->whitelist(['client_id', 'name', 'note', 'state', 'redir']);
-        $this->_CrudData->load('Projects')->attributes(['redir' => ['type'=> 'hidden']]);
+		$projectsCongif = $this->_CrudData->load('Projects');
+        $projectsCongif->whitelist(['client_id', 'name', 'note', 'state', 'redir']);
+        $projectsCongif->addAttributes('redir', ['input' => ['type'=> 'hidden']]);
         $clients = $this->Projects->Clients->find('list', ['limit' => 200]);
         $this->set(compact('project', 'clients'));
         $this->set('_serialize', ['project']);
