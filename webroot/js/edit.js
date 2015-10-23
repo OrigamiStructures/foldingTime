@@ -34,11 +34,11 @@ function updateTaskList(){
 }
 
 function updateNewTaskButton(){
-    var replacement = 'tasks/add/' + $('select#project-id').val() + '/1'; 
+    var replacement = '/tasks/add/' + $('select#project-id').val() + '/1'; 
     $('li.newTaskButton a').attr('href', replacement);
 }
 
 function updateNewProjectButton(){
-    var replacement = 'projects/add/' + $('select#project-id').val() + '/1'; 
+    var replacement = '/projects/add/' + $('select#project-id').val() + '/1'; 
     $('li.newProjectButton a').attr('href', replacement);
 }

@@ -106,7 +106,7 @@ class ActivitiesTable extends Table
 	public function findUserActivities(Query $query, array $options) {
         $session_user = $options['request']->session()->read('Auth.User.id');
         $default = [
-            0 => 7,
+            0 => 15,
             1 => is_null($session_user) ? 'ALL' : $session_user
         ];
         list($days, $user) = $options['request']->params['pass'] + $default;
