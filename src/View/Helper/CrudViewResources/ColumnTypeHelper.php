@@ -20,7 +20,7 @@ class ColumnTypeHelper extends CrudFields implements FieldOutputInterface {
 	 * 
 	 * @param type $helper
 	 */
-	public function leadPlus($field, $options) {
+	public function leadPlus($field, $options = []) {
 		$hidden = $this->helper->Html->div(
 				'full_text',
 				$this->helper->Html->para(
@@ -36,7 +36,7 @@ class ColumnTypeHelper extends CrudFields implements FieldOutputInterface {
 			);
 	}
     
-    public function duration($field, $options) {
+    public function duration($field, $options = []) {
 //        debug($this->helper);
 //        die;
         return round($this->helper->entity->duration, 2);
