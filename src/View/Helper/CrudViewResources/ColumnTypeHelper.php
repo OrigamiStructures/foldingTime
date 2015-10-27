@@ -2,13 +2,14 @@
 namespace App\View\Helper\CrudViewResources;
 
 use CrudViews\View\Helper\CRUD\CrudFields;
+use \CrudViews\View\Helper\CRUD\FieldOutputInterface;
 
 /**
  * ColumnTypeOutput contains developer defined output strategies for custom column types
  *
  * @author dondrake
  */
-class ColumnTypeHelper extends CrudFields implements \CrudViews\View\Helper\CRUD\FieldOutputInterface {
+class ColumnTypeHelper extends CrudFields implements FieldOutputInterface {
 
 	/**
 	 * Show some of long text and hide all for flyout

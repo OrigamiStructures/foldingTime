@@ -5,7 +5,8 @@ namespace App\View\Helper\CrudViewResources;
 use CrudViews\View\Helper\CRUD\Decorator\BasicDecorationSetups;
 use CrudViews\View\Helper\CRUD\Decorator;
 use Cake\Utility\Text;
-use CrudViews\View\Helper\CRUD\CrudFields;
+//use CrudViews\View\Helper\CRUD\CrudFields;
+use App\View\Helper\CrudViewResources\ColumnTypeHelper;
 use CrudViews\View\Helper\CRUD\Decorator\TableCellDecorator;
 use CrudViews\View\Helper\CRUD\Decorator\BelongsToDecorator;
 use CrudViews\View\Helper\CRUD\Decorator\BelongsToSelectDecorator;
@@ -19,7 +20,7 @@ use CrudViews\View\Helper\CRUD\Decorator\LinkDecorator;
  * They should return some CrudFields sub-class possibly 
  * decorated with sub-classes of FieldDecorator.
  * 
- * return new CRUD\Decorator\BelongsToDecorator(new CRUD\CrudFields($helper));
+ * return new BelongsToDecorator(new ColumnTypeHelper($helper));
  * 
  * They should all take one argument, $helper, which is an instance of CrudHelper
  * 
@@ -47,14 +48,14 @@ class DecorationSetups extends BasicDecorationSetups {
 		return new TableCellDecorator(
 //				new Decorator\LabelDecorator(
 				new BelongsToSelectDecorator(
-				new CrudFields($helper)
+				new ColumnTypeHelper($helper)
 		));
 	}
 	
 	public function liLink($helper) {
 		return new LiDecorator(
 				new LinkDecorator(
-				new CrudFields($helper)
+				new ColumnTypeHelper($helper)
 				));
 	}
     
