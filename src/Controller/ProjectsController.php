@@ -22,7 +22,24 @@ class ProjectsController extends AppController
             'contain' => ['Clients']
         ];
         $this->set('projects', $this->paginate($this->Projects));
+        //Crud stuff
+            $CurdProjects = $this->_CrudData->load('Projects');
+            $CurdProjects->whitelist(['client_id', 'name', 'note', 'state']);
+            $CurdProjects->addAttributes('client_id', [
+                    'div' => ['class' => 'columns small-1 medium-2']
+                ]);
+            $CurdProjects->addAttributes('name', [
+                    'div' => ['class' => 'columns small-1 medium-3']
+                ]);
+            $CurdProjects->addAttributes('note', [
+                    'div' => ['class' => 'columns small-1 medium-5']
+                ]);
+            $CurdProjects->addAttributes('state', [
+                    'div' => ['class' => 'columns small-1 medium-2']
+                ]);
+        //end Crud stuff
         $this->set('_serialize', ['projects']);
+        $this->render('CrudViews.CRUD/index_responsive');
     }
 
     /**
