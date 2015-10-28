@@ -1,15 +1,15 @@
 <?php
 namespace App\View\Helper\CrudViewResources;
 
-use CrudViews\View\Helper\CRUD\CrudFields;
-use \CrudViews\View\Helper\CRUD\FieldOutputInterface;
+use CrudViews\View\Helper\CRUD\BaseColumnOutput;
+use \CrudViews\View\Helper\CRUD\ColumnOutputInterface;
 
 /**
  * ColumnTypeOutput contains developer defined output strategies for custom column types
  *
  * @author dondrake
  */
-class ColumnTypeHelper extends CrudFields implements FieldOutputInterface {
+class ColumnOutput extends BaseColumnOutput implements ColumnOutputInterface {
 
 	/**
 	 * Show some of long text and hide all for flyout

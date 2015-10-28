@@ -2,11 +2,11 @@
 
 namespace App\View\Helper\CrudViewResources;
 
-use CrudViews\View\Helper\CRUD\Decorator\BasicDecorationSetups;
+use CrudViews\View\Helper\CRUD\Decorator\BasicDecorationFactory;
 use CrudViews\View\Helper\CRUD\Decorator;
 use Cake\Utility\Text;
 //use CrudViews\View\Helper\CRUD\CrudFields;
-use App\View\Helper\CrudViewResources\ColumnTypeHelper;
+use App\View\Helper\CrudViewResources\ColumnOutput;
 use CrudViews\View\Helper\CRUD\Decorator\TableCellDecorator;
 use CrudViews\View\Helper\CRUD\Decorator\BelongsToDecorator;
 use CrudViews\View\Helper\CRUD\Decorator\BelongsToSelectDecorator;
@@ -29,7 +29,7 @@ use CrudViews\View\Helper\CRUD\Decorator\LinkDecorator;
  *
  * @author dondrake
  */
-class DecorationSetups extends BasicDecorationSetups {
+class DecorationFactory extends BasicDecorationFactory {
 	
 	public function __construct($helper) {
 		return parent::__construct($helper);
@@ -48,14 +48,14 @@ class DecorationSetups extends BasicDecorationSetups {
 		return new TableCellDecorator(
 //				new Decorator\LabelDecorator(
 				new BelongsToSelectDecorator(
-				new ColumnTypeHelper($helper)
+				new ColumnOutput($helper)
 		));
 	}
 	
 	public function liLink($helper) {
 		return new LiDecorator(
 				new LinkDecorator(
-				new ColumnTypeHelper($helper)
+				new ColumnOutput($helper)
 				));
 	}
     
