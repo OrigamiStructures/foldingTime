@@ -48,7 +48,7 @@ class ActivitiesController extends AppController
         //end Crud stuff
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
-        $this->render('CrudViews.CRUD/index_responsive');
+        $this->render('index_with_crud');
     }
 
     /**
