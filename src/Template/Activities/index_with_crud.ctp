@@ -1,6 +1,10 @@
 <?php 
 $this->append('css');
     echo $this->Html->css('CrudViews.crudBase');
+    echo $this->Html->css('glyphicon');
+$this->end();
+$this->append('script');
+    echo $this->Html->script('timekeep');
 $this->end();
 
 ?>
@@ -9,7 +13,7 @@ $this->end();
 	<?= $this->element('CrudViews.CRUD/crud_actions_ul'); ?>
 </div>
 <div class="tags index large-10 medium-9 columns">
-	<?= $this->element('CrudViews.CRUD/crud_index_responsive'); ?>
+	<?= $this->element('activity_crud_index'); ?>
 </div>
 <?php 
 
