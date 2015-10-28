@@ -48,7 +48,8 @@ class AppController extends BaseController {
             'Projects',
             'Tasks',
             'Times',
-            'Users'
+            'Users',
+            'Activities.index'
             ]);
 		$this->loadComponent('Auth', [
             'authenticate' => [
