@@ -35,11 +35,11 @@ $cakeDescription = 'OS Time';
         $this->prepend('script', $this->Html->script('../bower_components/fastclick/lib/fastclick'));
         $this->prepend('script', $this->Html->script('../bower_components/jquery/dist/jquery'));
         
-        $this->start('jsGlobalVars');
-            echo "var webroot = '{$this->request->webroot}';";
-            echo "var action = '{$this->request->params['action']}/';";
-            echo "var controller = '{$this->request->params['controller']}/';";
-        $this->end();
+        $this->prepend('jsGlobalVars', "var controller = '{$this->request->params['controller']}/';");
+        $this->prepend('jsGlobalVars', "var action = '{$this->request->params['action']}/';");
+        $this->prepend('jsGlobalVars', "var webroot = '{$this->request->webroot}';");
+        
+        
         echo "<script type=\"text/javascript\">
         //<![CDATA[
         // global data for javascript\r";
@@ -58,7 +58,9 @@ $cakeDescription = 'OS Time';
     <div id="container">
 
         <div id="content">
-            <?= $this->Flash->render() ?>
+            <div id="flash_message">
+                <?= $this->Flash->render() ?>                
+            </div>
 
             <div class="row">
                 <?= $this->fetch('content') ?>

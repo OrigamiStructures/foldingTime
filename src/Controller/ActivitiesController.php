@@ -26,8 +26,29 @@ class ActivitiesController extends AppController
         ];
         $query = $this->Activities->find('UserActivities', $customFinderOptions);
         $this->set('activities', $this->paginate($query));
+        //Crud stuff
+            $CrudActivities = $this->_CrudData->load('Activities');
+            $CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
+            $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
+            $CrudActivities->addAttributes('project_id', [
+                    'div' => ['class' => 'columns small-4']
+                ]);
+            $CrudActivities->addAttributes('time_in', [
+                    'div' => ['class' => 'columns small-6']
+                ]);
+            $CrudActivities->addAttributes('duration', [
+                    'div' => ['class' => 'columns small-2']
+                ]);
+            $CrudActivities->addAttributes('task_id', [
+                    'div' => ['class' => 'columns small-4']
+                ]);
+            $CrudActivities->addAttributes('activity', [
+                    'div' => ['class' => 'columns small-8']
+                ]);
+        //end Crud stuff
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
+        $this->render('CrudViews.CRUD/index_responsive');
     }
 
     /**
@@ -69,15 +90,15 @@ class ActivitiesController extends AppController
         $users = $this->Activities->Users->find('list');
         $projects = $this->Activities->Projects->find('list')
                 ->where(['state' => 'active']);
-        $tasks = $this->Activities->Tasks->find('list')
-                ->where(['state' => 'active']);
+        $tasks = $this->Activities->Tasks->find('tasksByProject', ['where' => ['state' => 'active']]);
+        $allTasks = $this->jsonTasks($this->Activities->Tasks->find('tasksByProject'));
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
             4 => 'CLOSED',
             8 => 'PAUSED'
         ];
-        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses', 'allTasks'));
         $this->set('_serialize', ['activity']);
         $this->layout = 'base';
     }
@@ -97,8 +118,12 @@ class ActivitiesController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $activity = $this->Activities->patchEntity($activity, $this->request->data);
-            $activity->time_in = new Time($activity->time_in_view);
-            $activity->time_out = new Time($activity->time_out_view);
+            if($activity->getOriginal('duration') != $this->request->data['duration']){
+                $activity = $this->changeDuration($activity, $this->request->data['duration']);
+            } else {
+                $activity->time_in = new Time($activity->time_in_view);
+                $activity->time_out = new Time($activity->time_out_view);
+            }
             if ($this->Activities->save($activity)) {
                 $this->Flash->success(__('The activity has been saved.'));
                 return $this->redirect(['action' => 'index']);
@@ -106,9 +131,16 @@ class ActivitiesController extends AppController
                 $this->Flash->error(__('The activity could not be saved. Please, try again.'));
             }
         }
+        if(isset($this->request->named['project_id'])){
+            $activity->project_id = $this->request->named['project_id'];
+        }
+        if(isset($this->request->named['task_id'])){
+            $activity->task_id = $this->request->named['task_id'];
+        }
         $users = $this->Activities->Users->find('list', ['limit' => 200]);
         $projects = $this->Activities->Projects->find('list', ['limit' => 200]);
         $tasks = $this->Activities->Tasks->find('list', ['limit' => 200]);
+        $allTasks = $this->jsonTasks($this->Activities->Tasks->find('tasksByProject'));
         $statuses = [
             1 => 'OPEN',
             2 => 'REVEIW',
@@ -117,7 +149,7 @@ class ActivitiesController extends AppController
         ];
         $activity->time_in_view = $activity->time_in->i18nFormat();
         $activity->time_out_view = $activity->time_out->i18nFormat();
-        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses'));
+        $this->set(compact('activity', 'users', 'projects', 'tasks', 'statuses', 'allTasks'));
         $this->set('_serialize', ['activity']);
     }
 
@@ -147,7 +179,7 @@ class ActivitiesController extends AppController
         $this->layout = 'ajax';
         $this->Activity->id = $this->request->data['id'];
         if($this->request->data['fieldName'] == 'duration'){
-            $this->saveDuration();
+            $this->changeDuration();
         } else {
             $this->saveStandard();
         }
@@ -157,22 +189,11 @@ class ActivitiesController extends AppController
         $this->render('/Elements/json_return');
     }
     
-    private function saveDuration() {
-        $time = explode(':', $this->request->data['value']);
-        if (count($time) == 1) {
-            $durSeconds = ($time[0] * MINUTE);
-        }  else {
-            $durSeconds = ($time[0] * HOUR + $time[1] * MINUTE);
-        }      
-        $timeIn = date('Y-m-d H:i:s', time() - $durSeconds);
-        $timeOut = date('Y-m-d H:i:s', time());
-        $this->request->data= array(
-            'Activity' => array(
-                'id' => $this->request->data['id'],
-                'time_in' => $timeIn,
-                'time_out' => $timeOut
-            )
-        );
+    private function changeDuration($activity, $durr = FALSE) {
+        $durr = $durr ? $durr * HOUR : $activity->duration * HOUR;
+        $activity->time_in = new Time("$durr seconds ago");
+        $activity->time_out = new Time();
+        return $activity;
     }
     
     private function saveStandard() {
@@ -194,13 +215,16 @@ class ActivitiesController extends AppController
     public function timeStop($id, $state = CLOSED) {
         $this->layout = 'ajax';
         $time = new \Cake\I18n\Time;
-        $activity = $this->Activities->get($id);
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
         if($activity->status != PAUSED){
             $activity->time_out = $time;
         }
         $activity->status = $state;
-        $element = $this->saveActivityChange($activity);
-        $this->render($element, ['activity', $this->Activities->get($id)]);
+        $this->saveActivityChange($activity);
+        $this->set(compact('activity'));
+        $this->render('/Element/json_return');
     }
     
 	/**
@@ -219,13 +243,14 @@ class ActivitiesController extends AppController
 	 */
     public function timeRestart($id) {
         $this->layout = 'ajax';
-        $duration = $this->Activity->field('duration', array('Activity.id' => $id));
-        $this->request->data('id', $id)
-                ->data('value', $duration);
-        $this->saveDuration();
-        $this->request->data('Activity.status', OPEN);
-        $element = $this->saveActivityChange($id);
-        $this->render($element, ['activity' => $this->request->data[$id]]);
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $activity = $this->changeDuration($activity);
+        $activity->status = OPEN;
+        $this->saveActivityChange($activity);
+        $this->set(compact('activity'));
+        $this->render('/Element/json_return');
     }
 
     /**
@@ -236,12 +261,13 @@ class ActivitiesController extends AppController
 	 */
     private function saveActivityChange($activity) {
         if(!$this->Activities->save($activity)){
-            $this->Session->setFlash('The record update failed, please try again.');
-            $element = '/Element/ajax_flash';
+            $this->Flash->set('The record update failed, please try again.');
+            $this->set('success', FALSE);
+            $this->set('element', 'error');
         } else {
-            $element = '/Element/track_row';
+            $this->set('success', TRUE);
+            $this->set('element', 'track_row');
         }
-        return $element;
     }
 
     /**
@@ -262,6 +288,67 @@ class ActivitiesController extends AppController
         $this->set(compact('users', 'projects', 'tasks'));
 		
 	}
+    
+	/**
+	 * Duplicate a record for a new activity record
+	 */
+    public function duplicateActivityRow($id) {
+        $this->layout = 'ajax';
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $dupe = $this->Activities->newEntity();
+        $dupe->activity = $activity->activity;
+        $dupe->project_id = $activity->project_id;
+        $dupe->task_id = $activity->task_id;
+        $dupe->user_id = $this->request->session()->read('Auth.User.id');
+        $dupe->time_in = new Time();
+        $dupe->time_out = $dupe->time_in;
+        $dupe->status = 1;
+        $this->saveActivityChange($dupe);
+        $id = $dupe->id;
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $this->set('activity', $activity);
+        $this->render('/Element/json_return');
+    }
+    
+    /**
+     * Delete an activity row
+     */
+    public function deleteActivityRow($id) {
+        $this->layout = 'ajax';
+        $activity = $this->Activities->get($id, [
+            'contain' => ['Projects', 'Tasks']
+        ]);
+        $this->set('activity', $activity);
+        if ($this->Activities->delete($activity)) {
+            $this->set('success', TRUE);
+            $this->set('element', 'track_row');
+        } else {
+            $this->Flash->set('The delete failed, please try again.');
+            $this->set('success', FALSE);
+            $this->set('element', 'error');
+        }
+        $this->render('/Element/json_return');
+    }
+    
+    public function jsonTasks($tasks) {
+        $output = '{';
+        foreach ($tasks as $proj_id => $proj_tasks) {
+            $output .= "'$proj_id':{\n";
+            foreach ($proj_tasks as $key => $value) {
+                $html_val = h($value);
+                $output .= "'$key':'{$html_val}',\n";
+            }
+            trim($output, ",\n");
+            $output .= "},\n";
+        }
+        trim($output,",\n");
+        $output .= "}";
+        return $output;
+    }
 
 
 

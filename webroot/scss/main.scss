@@ -120,3 +120,27 @@ button.micro, .button.micro {
     font-size: 0.6875rem;
     padding: 0.5rem;
 }
+
+div.top_row {
+    border-top: thin solid;
+}
+
+
+div.header-title {
+    background-color: $background-green;
+    margin-bottom: 2px;
+    h1{
+        display: inline;
+        vertical-align: middle;
+    }
+    span {
+        div{
+            display: none;
+        }
+        :hover {
+            div{
+                display: inline-block;
+            }
+        }
+    }
+}

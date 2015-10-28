@@ -34,12 +34,12 @@ function timeChange(e, action) {
     $.ajax({
         type: "GET",
         url: webroot + controller + action + "/" + id,
-        dataType: "HTML",
+        dataType: "JSON",
         success: function (data) {
-            if (data.match(/<tr/) != null) {
-                replaceRow(data, id);
+            if (data.success) {
+                replaceRow(data.result, id);
             } else {
-                $('#row_' + id).before('<tr><td colspan="5" class="flashmessage"' + data + '</td></tr>');
+                $('#flash_message').html(data.result);
             }
         },
         error: function () {
@@ -70,18 +70,18 @@ function timeReopen(e) {
 
 function timeDelete(e) {
     e.preventDefault();
+    var id = $(e.currentTarget).attr('index');
     var c = confirm('Are you sure you want to delete this time record?');
     if (!c) {
         return;
     }
-    var id = $('#' + $(this).attr('index') + 'TimeId').val();
     $.ajax({
         type: "POST",
-        url: webroot + controller + "deleteRow/" + id,
+        url: webroot + controller + "deleteActivityRow/" + id,
         dataType: "JSON",
         success: function (data) {
-            if (data.result) {
-                $('#' + id + 'TimeId').parents('tr').remove();
+            if (data.success) {
+                $('#row_' + id).remove();
             } else {
                 alert('The deletion failed, please try again.');
             }
@@ -151,9 +151,6 @@ function saveTimeEdit(e) {
 function replaceRow(data, id) {
     $('#row_' + id).replaceWith(data);
     bindHandlers('#row_' + id);
-    initToggles('#row_' + id);
-    updateTableClassing();
-    updateTableSortability();
 }
 
 /**
@@ -316,14 +313,15 @@ function hideDurationInput(e) {
     e.preventDefault();
     $.ajax({
         type: "GET",
-        url: webroot + controller + "duplicateTimeRow/" + $(e.currentTarget).attr('index'),
-        dataType: "html",
+        url: webroot + controller + "duplicateActivityRow/" + $(e.currentTarget).attr('index'),
+        dataType: "JSON",
         success: function (data) {
-            $('#TimeTrackForm tbody').append(data);
-            updateTableClassing();
-            updateTableSortability();
-            bindHandlers('table.sortable tr.last');
-            initToggles();
+            if(data.success){
+                $('section.activities').prepend(data.result);
+                bindHandlers('div.activities');
+            } else {
+                $('#flash_message').html(data.result);
+            }
         },
         error: function () {
             alert('Error adding the time row.')

@@ -22,7 +22,24 @@ class ProjectsController extends AppController
             'contain' => ['Clients']
         ];
         $this->set('projects', $this->paginate($this->Projects));
+        //Crud stuff
+            $CurdProjects = $this->_CrudData->load('Projects');
+            $CurdProjects->whitelist(['client_id', 'name', 'note', 'state']);
+            $CurdProjects->addAttributes('client_id', [
+                    'div' => ['class' => 'columns small-1 medium-2']
+                ]);
+            $CurdProjects->addAttributes('name', [
+                    'div' => ['class' => 'columns small-1 medium-3']
+                ]);
+            $CurdProjects->addAttributes('note', [
+                    'div' => ['class' => 'columns small-1 medium-5']
+                ]);
+            $CurdProjects->addAttributes('state', [
+                    'div' => ['class' => 'columns small-1 medium-2']
+                ]);
+        //end Crud stuff
         $this->set('_serialize', ['projects']);
+        $this->render('CrudViews.CRUD/index_responsive');
     }
 
     /**
@@ -62,18 +79,34 @@ class ProjectsController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($proj = NULL, $redir = FALSE)
     {
         $project = $this->Projects->newEntity();
         if ($this->request->is('post')) {
             $project = $this->Projects->patchEntity($project, $this->request->data);
             if ($this->Projects->save($project)) {
                 $this->Flash->success(__('The project has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                if(isset($this->request->data['redir'])){
+                    $redir = $this->request->data['redir'] . "/project_id:{$project->id}";
+                    return $this->redirect($redir);
+                } else {
+                    return $this->redirect(['action' => 'index']);
+                }
             } else {
                 $this->Flash->error(__('The project could not be saved. Please, try again.'));
             }
         }
+        if(!is_null($proj)){
+            $project_client = $this->Projects->get($proj);
+            $project->client_id = $project_client->client_id;
+        }
+        if($redir){
+            $this->Projects->schema()->addColumn('redir', 'string');
+            $project->redir = $this->request->referer();
+        }
+		$projectsCongif = $this->_CrudData->load('Projects');
+        $projectsCongif->whitelist(['client_id', 'name', 'note', 'state', 'redir']);
+        $projectsCongif->addAttributes('redir', ['input' => ['type'=> 'hidden']]);
         $clients = $this->Projects->Clients->find('list', ['limit' => 200]);
         $this->set(compact('project', 'clients'));
         $this->set('_serialize', ['project']);

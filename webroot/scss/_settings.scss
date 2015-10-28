@@ -126,11 +126,12 @@ $secondary-color: red;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
 // $info-color: #a0d3e8;
+$background-green: desaturate(lighten($dk_green, 70%), 50%);
 
 // We use these to control various global styles
 $body-bg: $white;
 $body-font-color: $dk_green;
-$body-font-family: 'Unna', serif;
+//$body-font-family: 'Unna', serif;
 // $body-font-weight: $font-weight-normal;
 // $body-font-style: normal;
 
