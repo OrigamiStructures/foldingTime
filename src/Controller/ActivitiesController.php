@@ -24,10 +24,13 @@ class ActivitiesController extends AppController
         $customFinderOptions = [
             'request' => $request
         ];
+        $CrudActivities = $this->_CrudData->load('Activities');
+        $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
         $query = $this->Activities->find('UserActivities', $customFinderOptions);
         $this->set('activities', $this->paginate($query));
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
+        $this->render('CrudViews.CRUD/index_responsive');
     }
 
     /**
