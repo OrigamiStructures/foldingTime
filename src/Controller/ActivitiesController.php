@@ -24,10 +24,28 @@ class ActivitiesController extends AppController
         $customFinderOptions = [
             'request' => $request
         ];
-        $CrudActivities = $this->_CrudData->load('Activities');
-        $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
         $query = $this->Activities->find('UserActivities', $customFinderOptions);
         $this->set('activities', $this->paginate($query));
+        //Crud stuff
+            $CrudActivities = $this->_CrudData->load('Activities');
+            $CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
+            $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
+            $CrudActivities->addAttributes('project_id', [
+                    'div' => ['class' => 'columns small-4']
+                ]);
+            $CrudActivities->addAttributes('time_in', [
+                    'div' => ['class' => 'columns small-6']
+                ]);
+            $CrudActivities->addAttributes('duration', [
+                    'div' => ['class' => 'columns small-2']
+                ]);
+            $CrudActivities->addAttributes('task_id', [
+                    'div' => ['class' => 'columns small-4']
+                ]);
+            $CrudActivities->addAttributes('activity', [
+                    'div' => ['class' => 'columns small-8']
+                ]);
+        //end Crud stuff
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
         $this->render('CrudViews.CRUD/index_responsive');
