@@ -6455,4 +6455,8 @@ div.header-title {
   div.header-title span :hover div {
     display: inline-block; }
 
+p.activity {
+  margin: 0;
+  font-size: 80%; }
+
 /*# sourceMappingURL=main.css.map */
