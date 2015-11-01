@@ -6376,8 +6376,14 @@ footer {
 .row.status1 {
   background-color: #b8f3c7; }
 
+.row.status1:nth-of-type(2n) {
+  background: #61e482; }
+
 .row.status8 {
   background-color: #ffc6b9; }
+
+.row.status8:nth-of-type(2n) {
+  background: #ff7353; }
 
 pre {
   margin-bottom: 1.25rem;

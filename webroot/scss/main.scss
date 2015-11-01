@@ -23,9 +23,15 @@ footer {
 .row.status1{
     background-color: rgb(184, 243, 199);
 }
+.row.status1:nth-of-type(2n){
+	background: darken(rgb(184, 243, 199), 20%);
+}
 
 .row.status8{
     background-color: rgb(255, 198, 185);
+}
+.row.status8:nth-of-type(2n){
+	background: darken(rgb(255, 198, 185), 20%);
 }
 
 
