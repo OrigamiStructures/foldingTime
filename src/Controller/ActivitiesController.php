@@ -30,22 +30,32 @@ class ActivitiesController extends AppController
             $CrudActivities = $this->_CrudData->load('Activities');
             $CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
             $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
+//			$CrudActivities->override(['activity' => 'controlledPTag']);
+			$CrudActivities->override(['activity' => 'leadPlus']);
+			$CrudActivities->addAttributes('activity', ['leadPlus' => ['truncate' => ['limit' => 35]]]);
             $CrudActivities->addAttributes('project_id', [
-                    'div' => ['class' => 'columns small-4']
+                    'div' => ['class' => 'columns small-5']
                 ]);
             $CrudActivities->addAttributes('time_in', [
-                    'div' => ['class' => 'columns small-6']
+                    'div' => ['class' => 'columns small-5']
                 ]);
             $CrudActivities->addAttributes('duration', [
                     'div' => ['class' => 'columns small-2']
                 ]);
             $CrudActivities->addAttributes('task_id', [
-                    'div' => ['class' => 'columns small-4']
+                    'div' => ['class' => 'columns small-5']
                 ]);
             $CrudActivities->addAttributes('activity', [
-                    'div' => ['class' => 'columns small-8']
+                    'div' => ['class' => 'columns small-7'],
+                    'leadPlus' => [
+						'div' => ['class' => 'columns small-7'],
+						'p' => ['class' => 'activity']
+					]
                 ]);
         //end Crud stuff
+		$entityCols = 'small-9';
+		$actionCols = 'small-3';
+		$this->set(compact('entityCols', 'actionCols'));
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
         $this->render('CrudViews.CRUD/index_responsive');
