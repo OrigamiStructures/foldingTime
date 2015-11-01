@@ -58,7 +58,7 @@ class ActivitiesController extends AppController
 		$this->set(compact('entityCols', 'actionCols'));
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
-        $this->render('CrudViews.CRUD/index_responsive');
+        $this->render('index_with_crud');
     }
 
     /**
