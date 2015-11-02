@@ -12,6 +12,12 @@ use Cake\I18n\Time;
 class ActivitiesController extends AppController
 {
 
+	public function initialize() {
+		parent::initialize();
+//		$this->connectCrudViews([
+//            'Activities.duplicateActivityRow'
+//            ]);
+	}
     /**
      * Index method
      *
@@ -26,42 +32,51 @@ class ActivitiesController extends AppController
         ];
         $query = $this->Activities->find('UserActivities', $customFinderOptions);
         $this->set('activities', $this->paginate($query));
-        //Crud stuff
-            $CrudActivities = $this->_CrudData->load('Activities');
-            $CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
-            $CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
-//			$CrudActivities->override(['activity' => 'controlledPTag']);
-			$CrudActivities->override(['activity' => 'leadPlus']);
-			$CrudActivities->addAttributes('activity', ['leadPlus' => ['truncate' => ['limit' => 35]]]);
-            $CrudActivities->addAttributes('project_id', [
-                    'div' => ['class' => 'columns small-5']
-                ]);
-            $CrudActivities->addAttributes('time_in', [
-                    'div' => ['class' => 'columns small-5']
-                ]);
-            $CrudActivities->addAttributes('duration', [
-                    'div' => ['class' => 'columns small-2']
-                ]);
-            $CrudActivities->addAttributes('task_id', [
-                    'div' => ['class' => 'columns small-5']
-                ]);
-            $CrudActivities->addAttributes('activity', [
-                    'div' => ['class' => 'columns small-7'],
-                    'leadPlus' => [
-						'div' => ['class' => 'columns small-7'],
-						'p' => ['class' => 'activity']
-					]
-                ]);
-        //end Crud stuff
-		$entityCols = 'small-9';
-		$actionCols = 'small-3';
-		$this->set(compact('entityCols', 'actionCols'));
+		$this->makeDynamicIndex();
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
         $this->render('index_with_crud');
     }
 
-    /**
+	protected function makeDynamicIndex() {
+		//Crud stuff
+		if (!isset($this->_CrudData)) {
+			$this->configIndex('Activities');
+//			$this->loadCrudHelper();
+		}
+		$CrudActivities = $this->_CrudData->load('Activities');
+		$CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
+		$CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
+//			$CrudActivities->override(['activity' => 'controlledPTag']);
+		$CrudActivities->override(['activity' => 'leadPlus']);
+		$CrudActivities->addAttributes('activity', ['leadPlus' => ['truncate' => ['limit' => 35]]]);
+		$CrudActivities->addAttributes('project_id', [
+				'div' => ['class' => 'columns small-5']
+			]);
+		$CrudActivities->addAttributes('time_in', [
+				'div' => ['class' => 'columns small-5']
+			]);
+		$CrudActivities->addAttributes('duration', [
+				'div' => ['class' => 'columns small-2']
+			]);
+		$CrudActivities->addAttributes('task_id', [
+				'div' => ['class' => 'columns small-5']
+			]);
+		$CrudActivities->addAttributes('activity', [
+				'div' => ['class' => 'columns small-7'],
+				'leadPlus' => [
+					'div' => ['class' => 'columns small-7'],
+					'p' => ['class' => 'activity']
+				]
+			]);
+        //end Crud stuff
+		$entityCols = 'small-9';
+		$actionCols = 'small-3';
+		$this->set(compact('entityCols', 'actionCols'));
+
+	}
+
+	/**
      * View method
      *
      * @param string|null $id Time id.
@@ -302,7 +317,8 @@ class ActivitiesController extends AppController
 	/**
 	 * Duplicate a record for a new activity record
 	 */
-    public function duplicateActivityRow($id) {
+    public function duplicateActivityRow($id = '') {
+		$id = $this->request->params['pass'][0];
         $this->layout = 'ajax';
         $activity = $this->Activities->get($id, [
             'contain' => ['Projects', 'Tasks']
@@ -321,6 +337,13 @@ class ActivitiesController extends AppController
             'contain' => ['Projects', 'Tasks']
         ]);
         $this->set('activity', $activity);
+//		$this->set('entity', $activity->toArray());
+//        $this->set('activity', $activity->toArray());
+//		$this->makeDynamicIndex();
+//		debug($activity);die;
+//		debug($this->_CrudData->load('Activities')->columns());
+//		debug($activity->duration);
+//		$activity->duration = $activity->duration;
         $this->render('/Element/json_return');
     }
     
