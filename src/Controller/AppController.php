@@ -49,6 +49,7 @@ class AppController extends BaseController {
             'Tasks',
             'Times',
             'Users',
+//            'Activities.duplicateActivityRow',
             'Activities.index'
             ]);
 		$this->loadComponent('Auth', [
