@@ -41,5 +41,9 @@ class ColumnOutput extends BaseColumnOutput implements ColumnOutputInterface {
 //        die;
         return round($this->helper->entity->duration, 2);
     }
+    
+    public function activityNotes($field, $options = []) {
+        return $this->helper->Html->tag('p', $this->helper->entity->$field, $this->helper->CrudData->attributes("$field.p"));
+    }
 
 }
