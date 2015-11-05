@@ -6373,11 +6373,20 @@ footer {
   width: 100%;
   vertical-align: baseline; }
 
+div[id*="row_"]:nth-of-type(2n) {
+  background-color: #e6e6e6; }
+
 .row.status1 {
   background-color: #b8f3c7; }
 
+.row.status1:nth-of-type(2n) {
+  background: #8ceca5; }
+
 .row.status8 {
   background-color: #ffc6b9; }
+
+.row.status8:nth-of-type(2n) {
+  background: #ff9c86; }
 
 pre {
   margin-bottom: 1.25rem;
@@ -6441,9 +6450,9 @@ button.micro, .button.micro {
   font-size: 0.6875rem;
   padding: 0.5rem; }
 
-div.top_row {
-  border-top: thin solid; }
-
+/*div.top_row {
+    border-top: thin solid;
+}*/
 div.header-title {
   background-color: #d4ded4;
   margin-bottom: 2px; }
@@ -6454,5 +6463,9 @@ div.header-title {
     display: none; }
   div.header-title span :hover div {
     display: inline-block; }
+
+p.activity {
+  margin: 0;
+  font-size: 80%; }
 
 /*# sourceMappingURL=main.css.map */
