@@ -95,7 +95,7 @@ class TkHelper extends Helper {
             'index' => $this->index, 
             'title' => 'Dup to a new record'
         ];
-        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-plus'));
+        $icon = $this->Html->tag('i', '', array('class' => 'glyphicon icon-duplicate'));
         return $this->Html->link($icon, '', $attributes);
 	}
     
