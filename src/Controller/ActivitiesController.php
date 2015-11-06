@@ -45,7 +45,7 @@ class ActivitiesController extends AppController
 //			$this->loadCrudHelper();
 		}
 		$CrudActivities = $this->_CrudData->load('Activities');
-		$CrudActivities->table()->schema()->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
+		$CrudActivities->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
 		$CrudActivities->whitelist(['project_id', 'time_in', 'duration', 'task_id', 'activity']);
 //			$CrudActivities->override(['activity' => 'controlledPTag']);
 		$CrudActivities->override(['activity' => 'leadPlus']);

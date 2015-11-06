@@ -26,7 +26,9 @@ class TimesController extends AppController
         $query = $this->Times->find('UserTimes', $customFinderOptions);
         $this->set('times', $this->paginate($query));
         $this->set('_serialize', ['times']);
-		$this->_CrudData->load('Times')->whitelist(['user_id', 'project_id', 'activity', 'time_in', 'time_out', 'duration'], TRUE);
+		$TimesObj = $this->_CrudData->load('Times');
+		$TimesObj->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
+		$TimesObj->whitelist(['user_id', 'project_id', 'activity', 'time_in', 'time_out', 'duration'], TRUE);
         $this->render('index');
     }
 
