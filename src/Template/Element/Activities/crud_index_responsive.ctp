@@ -27,25 +27,11 @@
     <?php
         foreach (${$this->Crud->alias()->variableName} as $entity): 
             $this->Crud->entity = $entity;
-    ?>
-        <div id="row_<?=$entity->id?>" class="row status<?=$entity->status?>">
-            <div class="columns <?=$entityCols?>">
-                <div class="row">
-                    <?php
-                        $this->Crud->strategy('responsiveRecordRows');
-                        foreach ($this->Crud->whitelist() as $field) :
-                            echo "\t\t\t\t" . $this->Crud->output($field) . "\n";
-                        endforeach;
-                    ?>
-                </div>
-            </div>
-            <div class="columns <?=$actionCols?> recordActions">
-                <?php
-					echo $this->Tk->timeFormActionButtons($entity->id, $entity->status);
-                ?>
-            </div>
-        </div>
-    <?php endforeach; ?>
+		
+			echo $this->element('track_row');
+		
+		endforeach; 
+	?>
     </section>
 <!--    <div class="paginator">
         <ul class="pagination">

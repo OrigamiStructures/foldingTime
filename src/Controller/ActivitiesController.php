@@ -249,6 +249,7 @@ class ActivitiesController extends AppController
         $activity->status = $state;
         $this->saveActivityChange($activity);
         $this->set(compact('activity'));
+		$this->makeDynamicIndex();
         $this->render('/Element/json_return');
     }
     
@@ -275,6 +276,7 @@ class ActivitiesController extends AppController
         $activity->status = OPEN;
         $this->saveActivityChange($activity);
         $this->set(compact('activity'));
+		$this->makeDynamicIndex();
         $this->render('/Element/json_return');
     }
 
@@ -337,13 +339,7 @@ class ActivitiesController extends AppController
             'contain' => ['Projects', 'Tasks']
         ]);
         $this->set('activity', $activity);
-//		$this->set('entity', $activity->toArray());
-//        $this->set('activity', $activity->toArray());
-//		$this->makeDynamicIndex();
-//		debug($activity);die;
-//		debug($this->_CrudData->load('Activities')->columns());
-//		debug($activity->duration);
-//		$activity->duration = $activity->duration;
+		$this->makeDynamicIndex();
         $this->render('/Element/json_return');
     }
     

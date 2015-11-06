@@ -12,9 +12,15 @@ if($success){
     $result = $this->Flash->render('flash', ['element' => $element]);
 }
 
-$return = [
-    'success' => $success,
-    'result' => $result
-];
+if(isset($debug) && $debug) {
+	debug($result);
+} else {
 
-echo json_encode($return);
+	$return = [
+		'success' => $success,
+		'result' => $result
+	];
+
+	echo json_encode($return);
+	
+}
