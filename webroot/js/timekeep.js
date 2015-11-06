@@ -317,7 +317,7 @@ function hideDurationInput(e) {
         dataType: "JSON",
         success: function (data) {
             if(data.success){
-                $('section.activities').prepend(data.result);
+                $('section.records').prepend(data.result);
                 bindHandlers('div.activities');
             } else {
                 $('#flash_message').html(data.result);
