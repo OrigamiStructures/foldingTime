@@ -13,11 +13,11 @@ use Cake\Utility\Text;
 class ColumnOutput extends BaseColumnOutput implements ColumnOutputInterface {
 
 	/**
-	 * Show some of long text and hide all for flyout
+	 * Show truncated long text and hide full version for flyout
 	 * 
 	 * When there is a lot of text for a small area, this shows just the 
 	 * truncated lead. The full text is in an element that is hidden. 
-	 * Javascript can implement a flyout to show the full thing.
+	 * Javascript or css can implement a flyout to show the full thing.
 	 * 
 	 * Attributes:
 	 *	$filed.leadPlus =>
@@ -51,6 +51,7 @@ class ColumnOutput extends BaseColumnOutput implements ColumnOutputInterface {
 		})->toArray();
 		
 		// output
+		// SOMEONE SORT THIS OUT TO MAKE IT HAVE DEFAULT out-of-the-box BEHAVIOR
 		$hidden = $this->helper->Html->div(
 				'full_text',
 				$this->helper->Html->tag(
