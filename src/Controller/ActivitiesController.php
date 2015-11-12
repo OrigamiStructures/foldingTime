@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
+use Cake\View\ViewBlock;
+use Cake\Collection\Collection;
 
 /**
  * Activities Controller
@@ -14,6 +16,7 @@ class ActivitiesController extends AppController
 
 	public function initialize() {
 		parent::initialize();
+		$this->block = new ViewBlock();
 //		$this->connectCrudViews([
 //            'Activities.duplicateActivityRow'
 //            ]);
@@ -376,6 +379,36 @@ class ActivitiesController extends AppController
         return $output;
     }
 
+	public function testme() {
+		$ch = curl_init();
 
+		// set URL and other appropriate options
+		curl_setopt($ch, CURLOPT_URL, "https://api.github.com/repos/OrigamiStructures/Cake3xMarkdown/issues");
+//		curl_setopt($ch, CURLOPT_URL, "https://api.github.com/users/origamistructures/repos");
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_USERAGENT, 'cakeapp');
+		curl_setopt($ch, CURLOPT_USERNAME, 'dreamingmind');
+		curl_setopt($ch, CURLOPT_PASSWORD, '');
+		
+
+		// grab URL and pass it to the browser
+		$this->block->start('user');
+		curl_exec($ch);
+		$this->block->end();
+		$string = json_decode($this->block->get('user'));
+		
+		foreach ($string as $repo => $data) {
+			debug($data->title);
+		}
+		
+		debug($string);
+		
+
+		// close cURL resource, and free up system resources
+		curl_close($ch);
+		
+//		debug($string);
+		die;
+	}
 
 }
