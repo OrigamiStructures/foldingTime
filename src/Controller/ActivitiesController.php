@@ -385,10 +385,11 @@ class ActivitiesController extends AppController
 		// set URL and other appropriate options
 		curl_setopt($ch, CURLOPT_URL, "https://api.github.com/repos/OrigamiStructures/Cake3xMarkdown/issues");
 //		curl_setopt($ch, CURLOPT_URL, "https://api.github.com/users/origamistructures/repos");
+//		curl_setopt($ch, CURLOPT_URL, "https://api.github.com/repos/OrigamiStructures/Cake3xMarkdown/collaborators");
 		curl_setopt($ch, CURLOPT_HEADER, 0);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'cakeapp');
 		curl_setopt($ch, CURLOPT_USERNAME, 'dreamingmind');
-		curl_setopt($ch, CURLOPT_PASSWORD, '');
+		curl_setopt($ch, CURLOPT_PASSWORD, 'arconist77LL');
 		
 
 		// grab URL and pass it to the browser
@@ -397,9 +398,10 @@ class ActivitiesController extends AppController
 		$this->block->end();
 		$string = json_decode($this->block->get('user'));
 		
-		foreach ($string as $repo => $data) {
-			debug($data->title);
-		}
+//		foreach ($string as $repo => $data) {
+//			debug($data->full_name);
+//		}
+		debug(array_keys(get_object_vars($string[0])));
 		
 		debug($string);
 		
