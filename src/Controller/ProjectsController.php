@@ -64,7 +64,7 @@ class ProjectsController extends AppController
         $this->configIndex('Times');
         $timeCrudObject = $this->_CrudData->load('Times');
 		$timeCrudObject->addColumn('duration', ['type' => 'decimal', 'precision' => 2]);
-        $timeCrudObject->overrideAction(['index' => 'projectTime']);
+//        $timeCrudObject->overrideAction(['index' => 'projectTime']);
         $timeCrudObject->override([
             'time_out' => 'duration'
         ]);
