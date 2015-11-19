@@ -26,14 +26,28 @@
     ?>
         <div class="<?=$row_class . ' top_row'?>" id="<?=$row_id?>">
             <div class="columns <?=$entityCols?>">
-                <div class="row">
                     <?php
+						$this->start('header_row');
+						$this->end();
+						$this->start('data_row');
+						$this->end();
                         $this->Crud->strategy('responsiveRecordRows');
+						$count = 0;
                         foreach ($this->Crud->whitelist() as $field) :
-                            echo "\t\t\t\t" . $this->Crud->output($field) . "\n";
+							if ($count < 3) {
+								$this->append('header_row');
+								echo "\t\t\t\t" . $this->Crud->output($field) . "\n";
+								$this->end();
+							} else {
+								$this->append('data_row');
+								echo "\t\t\t\t" . $this->Crud->output($field) . "\n";
+								$this->end();
+							}
+							$count++;
                         endforeach;
                     ?>
-                </div>
+				<div class="header_row row"><?=$this->fetch('header_row');?></div>
+				<div class="data_row row"><?=$this->fetch('data_row');?></div>
             </div>
             <div class="columns <?=$actionCols?> recordActions">
                 <?= $this->Tk->timeFormActionButtons($entity->id, $entity->status); ?>
