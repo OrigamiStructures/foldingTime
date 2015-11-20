@@ -212,4 +212,4 @@ define("CLOSED", 4);
 define("PAUSED", 8);
 
 
-Plugin::load('OSDebug', ['bootstrap' => false, 'routes' => true]);
+Plugin::load('OSDebug', ['bootstrap' => true, 'routes' => true]);
