@@ -7,3 +7,6 @@
 [submodule "plugins/CrudViews"]
 	path = plugins/CrudViews
 	url = https://dreamingmind@github.com/OrigamiStructures/crudViews.git
+[submodule "plugins/OSDebug"]
+	path = plugins/OSDebug
+	url = https://curlyjason@github.com/OrigamiStructures/OSDebug.git
