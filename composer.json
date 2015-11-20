@@ -15,7 +15,7 @@
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.0",
         "cakephp/bake": "~1.0",
-		"davidyell/proffer": "~0.4",
+        "davidyell/proffer": "~0.4",
         "phpunit/phpunit": "4.8.16"
     },
     "suggest": {
@@ -24,13 +24,15 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src"
+            "App\\": "src",
+            "OSDebug\\": "./plugins/OSDebug/src"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "App\\Test\\": "tests",
-            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
+            "Cake\\Test\\": "./vendor/cakephp/cakephp/tests",
+            "OSDebug\\Test\\": "./plugins/OSDebug/tests"
         }
     },
     "scripts": {

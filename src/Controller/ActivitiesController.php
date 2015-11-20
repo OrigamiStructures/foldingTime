@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
-
 /**
  * Activities Controller
  *
@@ -35,6 +34,7 @@ class ActivitiesController extends AppController
 		$this->makeDynamicIndex();
         $this->set('_serialize', ['activities']);
         $this->layout = 'base';
+        osd();
         $this->render('index_with_crud');
     }
 
