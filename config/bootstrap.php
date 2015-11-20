@@ -211,3 +211,5 @@ define("REVIEW", 2);
 define("CLOSED", 4);
 define("PAUSED", 8);
 
+
+Plugin::load('OSDebug', ['bootstrap' => false, 'routes' => true]);
