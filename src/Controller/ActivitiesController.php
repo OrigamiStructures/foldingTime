@@ -3,7 +3,6 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\I18n\Time;
-
 /**
  * Activities Controller
  *
@@ -50,21 +49,21 @@ class ActivitiesController extends AppController
 		$CrudActivities->override(['activity' => 'leadPlus']);
 		
 		$CrudActivities->addAttributes([
-			['project_id' => [
-				'div' => ['class' => 'columns small-5'] ]],
-			['time_in' => [
-				'div' => ['class' => 'columns small-5'] ]],
-			['duration' => [
-				'div' => ['class' => 'columns small-2'] ]],
-			['task_id' => [
-				'div' => ['class' => 'columns small-5'] ]],
-			['activity' => [
+			'project_id' => [
+				'div' => ['class' => 'columns small-5'] ],
+			'time_in' => [
+				'div' => ['class' => 'columns small-5'] ],
+			'duration' => [
+				'div' => ['class' => 'columns small-2'] ],
+			'task_id' => [
+				'div' => ['class' => 'columns small-5'] ],
+			'activity' => [
 				'div' => ['class' => 'columns small-7'],
 				'leadPlus' => [
 					'div' => ['class' => 'columns small-7'],
 					'p' => ['class' => 'activity'],
 					'truncate' => ['limit' => 35]
-				] ]]
+				] ]
 		]);
         //end Crud stuff
 		$entityCols = 'small-9';

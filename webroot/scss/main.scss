@@ -20,21 +20,74 @@ footer {
     vertical-align: baseline;
 }
 
+$row-past: white;
+$row-open: rgb(184, 243, 199);
+$row-paused: rgb(255, 198, 185);
+
+div[id*="row_"] {
+	background-color: $row-past;
+	div.header_row {
+		background-color: desaturate(darken($row-past, 5%), 5%);
+	}
+}
+
+div.data_row {
+	padding: 3px 3px 6px 3px;
+}
+	
+div.header_row {
+	font-size: 80%;
+	color: desaturate(lighten($dk_green, 30%), 50%);
+	line-height: 2em;
+	.columns:first-of-type {
+		font-size: 120%;
+	}
+	.columns:nth-of-type(2n) {
+		text-align: right;
+	}
+	.columns:nth-of-type(3n):after {
+		content: ' HR';
+	}
+}
+
 div[id*="row_"]:nth-of-type(2n) {
-	background-color: darken(white, 10%);
+	background-color: darken($row-past, 10%);
+	div.header_row {
+		background-color: desaturate(darken($row-past, 15%), 5%);
+	}
 }
 .row.status1{
-    background-color: rgb(184, 243, 199);
+    background-color: $row-open;
+	div.header_row {
+		background-color: desaturate(darken($row-open, 5%), 5%);
+/*		 Safari 5.1, Chrome 10+  
+		background: -webkit-linear-gradient(top, desaturate(darken($row-open, 5%), 5%), $row-open); 
+		 Firefox 3.6+  
+		background: -moz-linear-gradient(top, desaturate(darken($row-open, 5%), 5%), $row-open); 	*/
+	}
 }
 .row.status1:nth-of-type(2n){
-	background: darken(rgb(184, 243, 199), 10%);
+	background: darken($row-open, 10%);
+	div.header_row {
+		background-color: desaturate(darken($row-open, 15%), 5%);
+/*		 Safari 5.1, Chrome 10+  
+		background: -webkit-linear-gradient(top, desaturate(darken($row-open, 15%), 5%), $row-open); 
+		 Firefox 3.6+  
+		background: -moz-linear-gradient(top, desaturate(darken($row-open, 15%), 5%), $row-open); 	*/
+	}
 }
 
 .row.status8{
-    background-color: rgb(255, 198, 185);
+    background-color: $row-paused;
+	div.header_row {
+		background-color: desaturate(darken($row-paused, 5%), 5%);
+	}
 }
 .row.status8:nth-of-type(2n){
-	background: darken(rgb(255, 198, 185), 10%);
+	background: darken($row-paused, 10%);
+	div.header_row {
+		background-color: desaturate(darken($row-paused, 15%), 5%);
+	}
 }
 
 
