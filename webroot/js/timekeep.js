@@ -310,21 +310,27 @@ function hideDurationInput(e) {
 	}
 
 	function timeDuplicate(e) {
-    e.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: webroot + controller + "duplicateActivityRow/" + $(e.currentTarget).attr('index'),
-        dataType: "JSON",
-        success: function (data) {
-            if(data.success){
-                $('section.records').prepend(data.result);
-                bindHandlers('div.activities');
-            } else {
-                $('#flash_message').html(data.result);
-            }
-        },
-        error: function () {
-            alert('Error adding the time row.')
-        }
-    });
+		var id = $(e.currentTarget).attr('index');
+		var prompt = window.prompt("New Activity Description", $('div#row_'+ id +' p.activity span.full_text').html());
+
+		if (prompt) {
+			e.preventDefault();
+			$.ajax({
+				type: "POST",
+				url: webroot + controller + "duplicateActivityRow/" + id,
+				data: {'activity': prompt},
+				dataType: "JSON",
+				success: function (data) {
+					if (data.success) {
+						$('section.records').prepend(data.result);
+						bindHandlers('div.activities');
+					} else {
+						$('#flash_message').html(data.result);
+					}
+				},
+				error: function () {
+					alert('Error adding the time row.')
+				}
+			});
+		}
 	}

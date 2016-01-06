@@ -322,7 +322,7 @@ class ActivitiesController extends AppController
             'contain' => ['Projects', 'Tasks']
         ]);
         $dupe = $this->Activities->newEntity();
-        $dupe->activity = $activity->activity;
+        $dupe->activity = $this->request->data['activity'];
         $dupe->project_id = $activity->project_id;
         $dupe->task_id = $activity->task_id;
         $dupe->user_id = $this->request->session()->read('Auth.User.id');
